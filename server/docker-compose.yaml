@@ -4,7 +4,7 @@ services:
     image: library/postgres:latest
     container_name: postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root --db-name game-server"]
+      test: ["CMD-SHELL", "pg_isready -U root --db-name game"]
       interval: 5s
       timeout: 5s
       retries: 10

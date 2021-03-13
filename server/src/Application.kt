@@ -63,7 +63,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     initDatabase(HikariConfig().apply {
-        jdbcUrl = "jdbc:postgresql://localhost:5432/game-server"
+        jdbcUrl = "jdbc:postgresql://localhost:5432/game"
         driverClassName = "org.postgresql.Driver"
         username = "postgres"
         password = "password"
