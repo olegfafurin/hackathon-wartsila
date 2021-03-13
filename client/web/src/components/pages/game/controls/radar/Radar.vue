@@ -1,15 +1,20 @@
 <template>
     <div class="radar-container" :style="compStyle">
-        <img src="@/assets/radar.png" alt="Фон радара" :style="compStyle"/>
+        <img src="@/assets/radar.png" alt="Фон радара" :style="compStyle" class="radar-sprite"/>
+        <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
+             :style="addShiftToStyle(p, ppSize, 5)"/>
         <Point v-for='p in points'
                :key='p.id'
                :current="p.current"
                :active="p.active"
                :position="p.position"
-               :grid-size="1">
+               :size="gridSize">
         </Point>
-        <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
-             :style="addShiftToStyle(p, ppSize)"/>
+        <img src='@/assets/player.png'
+             alt="игрок" :style="addShiftToStyle({x:0, y:0},getSizeStyle(4*gridSize),4*gridSize)"
+             class="player-icon"/>
+        <img src="@/assets/radar-border.png" alt="Рамка радара" :style="compStyle" class="radar-sprite"/>
+
     </div>
 </template>
 
@@ -44,15 +49,17 @@
                     y: pos.y * this.gridSize + this.shift.y,
                 }
             },
-            addShiftToStyle(pos, base_style) {
+            addShiftToStyle(pos, base_style, size) {
                 const p = this.calcPosition(pos);
-                console.log(p);
-                return base_style + " border-radius:2rem; top:" + p.x + "px; left:" + p.y + "px;"
+                return base_style + " border-radius:2rem; left:" + (p.x - size / 2) + "px; top:" + (p.y - size / 2) + "px;"
+            },
+            getSizeStyle(s){
+                return "height:" + s + "px; width:" + s + "px; "
             }
         },
         computed: {
             gridSize() {
-                return 10;
+                return this.size / 30;
             },
             shift() {
                 return {
@@ -75,7 +82,7 @@
             ppSize() {
                 const range = 60;
                 return "height:" + this.size / range + "px; width:" + this.size / range + "px; "
-            }
+            },
         }
     }
 </script>
@@ -89,5 +96,15 @@
         position: absolute;
         background-color: aquamarine;
 
+    }
+
+    .player-icon {
+        position: absolute;
+    }
+
+    .radar-sprite{
+        position: absolute;
+        top:0;
+        left: 0;
     }
 </style>

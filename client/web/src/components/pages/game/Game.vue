@@ -1,7 +1,7 @@
 <template>
     <div class="hello">
         <h1>Wartsila game</h1>
-        <Radar :size="300" :map="radarMap.map"></Radar>
+        <Radar :size="300" :map="radarData.map"></Radar>
     </div>
 </template>
 
@@ -16,7 +16,7 @@
         },
         data() {
             return {
-                radarMap: {
+                radarData: {
                     angle_speed: 1,
                     range: 1,
                     map: {
