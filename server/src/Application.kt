@@ -64,6 +64,10 @@ fun Application.module(testing: Boolean = false) {
     initDatabase("resources/db.properties")
 
     routing {
+        get("/") {
+            call.respond("Ok")
+        }
+
         (UserRouting("user").install)()
     }
 }
