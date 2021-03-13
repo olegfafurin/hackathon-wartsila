@@ -10,19 +10,16 @@ import io.ktor.features.*
 import org.slf4j.event.*
 import io.ktor.auth.*
 import com.fasterxml.jackson.databind.*
+import io.ktor.auth.jwt.*
 import io.ktor.jackson.*
+import lsd.wheel.auth.JWTInstance
+import lsd.wheel.service.UserService
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    install(Sessions) {
-        cookie<MySession>("MY_SESSION") {
-            cookie.extensions["SameSite"] = "lax"
-        }
-    }
-
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
@@ -30,16 +27,34 @@ fun Application.module(testing: Boolean = false) {
 
     install(CORS) {
         method(HttpMethod.Options)
+        method(HttpMethod.Get)
         method(HttpMethod.Put)
+        method(HttpMethod.Post)
         method(HttpMethod.Delete)
         method(HttpMethod.Patch)
+
         header(HttpHeaders.Authorization)
-        header("MyCustomHeader")
+        header(HttpHeaders.AccessControlAllowOrigin)
+        header(HttpHeaders.AccessControlAllowHeaders)
+
         allowCredentials = true
+        allowNonSimpleContentTypes = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
 
     install(Authentication) {
+        jwt {
+            verifier(JWTInstance.verifier)
+            realm = "***.wheel"
+            validate { credentials ->
+                val login = credentials.payload.getClaim("login")
+                when {
+                    login.isNull -> null
+                    UserService.getUserByLogin() == null -> null
+                    else -> JWTPrincipal(credentials.payload)
+                }
+            }
+        }
     }
 
     install(ContentNegotiation) {
@@ -49,21 +64,15 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
+        post("login") {
+            data class UserForm(
+                val login: String,
+                val password: String
+            )
 
-        get("/session/increment") {
-            val session = call.sessions.get<MySession>() ?: MySession()
-            call.sessions.set(session.copy(count = session.count + 1))
-            call.respondText("Counter is ${session.count}. Refresh to increment.")
-        }
+            val userData = context.receive<UserForm>()
 
-        get("/json/jackson") {
-            call.respond(mapOf("hello" to "world"))
         }
     }
 }
-
-data class MySession(val count: Int = 0)
 
