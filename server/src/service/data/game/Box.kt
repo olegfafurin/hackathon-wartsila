@@ -1,4 +1,4 @@
-package lsd.wheel.logic
+package lsd.wheel.service.data.game
 
 /**
  * created by imd on 13.03.2021
