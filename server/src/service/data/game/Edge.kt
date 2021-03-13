@@ -5,5 +5,5 @@ data class Edge(
     val vertex1: Int,
     val vertex2: Int,
     val blocked: Boolean,
-    val path: MutableList<Pair<Int, Int>>
+    val path: List<Pair<Int, Int>>
 )

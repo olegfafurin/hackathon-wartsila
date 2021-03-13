@@ -1,5 +1,6 @@
 package lsd.wheel.service
 
+import db.dao.game.EdgePathTable
 import db.dao.game.EdgeTable
 import lsd.wheel.db.dao.game.FieldEntity
 import lsd.wheel.db.dao.game.VertexTable
@@ -57,7 +58,9 @@ object GameService {
                     edgeId,
                     v1, v2,
                     row[EdgeTable.blocked],
-                    mutableListOf()
+                    EdgePathTable.select { EdgePathTable.edgeId eq edgeOldId }.map { pathRow ->
+                        Pair(pathRow[EdgePathTable.x], pathRow[EdgePathTable.y])
+                    }
                 )
             )
             when {
