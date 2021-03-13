@@ -64,22 +64,23 @@ object GameService {
                 )
             )
             when {
-                vertexRowList[v1][VertexTable.edgeEast] == edgeOldId -> {
+                vertexRowList[v1][VertexTable.edgeEast] == edgeOldId ->
                     vertices[v1].edges[Direction.EAST] = edgeId
-                    vertices[v2].edges[Direction.WEST] = edgeId
-                }
-                vertexRowList[v1][VertexTable.edgeWest] == edgeOldId -> {
+                vertexRowList[v1][VertexTable.edgeWest] == edgeOldId ->
                     vertices[v1].edges[Direction.WEST] = edgeId
-                    vertices[v2].edges[Direction.EAST] = edgeId
-                }
-                vertexRowList[v1][VertexTable.edgeNorth] == edgeOldId -> {
+                vertexRowList[v1][VertexTable.edgeNorth] == edgeOldId ->
                     vertices[v1].edges[Direction.NORTH] = edgeId
-                    vertices[v2].edges[Direction.SOUTH] = edgeId
-                }
-                vertexRowList[v1][VertexTable.edgeSouth] == edgeOldId -> {
+                vertexRowList[v1][VertexTable.edgeSouth] == edgeOldId ->
                     vertices[v1].edges[Direction.SOUTH] = edgeId
+
+                vertexRowList[v2][VertexTable.edgeEast] == edgeOldId ->
+                    vertices[v2].edges[Direction.EAST] = edgeId
+                vertexRowList[v2][VertexTable.edgeWest] == edgeOldId ->
+                    vertices[v2].edges[Direction.WEST] = edgeId
+                vertexRowList[v2][VertexTable.edgeNorth] == edgeOldId ->
                     vertices[v2].edges[Direction.NORTH] = edgeId
-                }
+                vertexRowList[v2][VertexTable.edgeSouth] == edgeOldId ->
+                    vertices[v2].edges[Direction.SOUTH] = edgeId
             }
         }
 
