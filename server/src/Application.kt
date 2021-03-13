@@ -10,6 +10,7 @@ import io.ktor.features.*
 import org.slf4j.event.*
 import io.ktor.auth.*
 import com.fasterxml.jackson.databind.*
+import com.zaxxer.hikari.HikariConfig
 import io.ktor.auth.jwt.*
 import io.ktor.jackson.*
 import lsd.wheel.auth.JWTInstance
@@ -61,7 +62,14 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
-    initDatabase("resources/db.properties")
+    initDatabase(HikariConfig().apply {
+        jdbcUrl = "jdbc:postgresql://localhost:5432/game-server"
+        driverClassName = "org.postgresql.Driver"
+        username = "postgres"
+        password = "password"
+        maximumPoolSize = 4
+        transactionIsolation = "TRANSACTION_READ_COMMITTED"
+    })
 
     routing {
         get("/") {
