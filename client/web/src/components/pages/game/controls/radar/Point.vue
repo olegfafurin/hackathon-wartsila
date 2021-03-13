@@ -13,6 +13,7 @@
                 x: Number,
                 y: Number,
             },
+            gridSize: Number,
             description: Object,
         },
         computed: {
@@ -20,7 +21,7 @@
                 return "point" + (this.active ? " point-active" : "") + (this.current ? " point-current" : "")
             },
             stylePosition() {
-                return "top:" + this.position.x + "px; left:" + this.position.y + ";"
+                return "top:" + this.position.x + "px; left:" + this.position.y+ ";"
             }
         },
         mounted() {
