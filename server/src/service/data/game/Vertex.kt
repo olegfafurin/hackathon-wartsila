@@ -1,5 +1,7 @@
 package lsd.wheel.service.data.game
 
+import lsd.wheel.game.Direction
+
 /**
  * created by imd on 13.03.2021
  */

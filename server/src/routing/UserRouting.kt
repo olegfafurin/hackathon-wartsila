@@ -43,7 +43,7 @@ class UserRouting(endpoint: String) : Routing(endpoint) {
 
             post("/register") {
                 val userData = context.receive<UserForm>()
-                if (UserService.addUser(userData.login, userData.password)) call.respond("ОК")
+                if (UserService.createUser(userData.login, userData.password)) call.respond("ОК")
                 else call.respond("User already exists")
             }
         }
