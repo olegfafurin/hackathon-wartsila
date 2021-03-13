@@ -2,6 +2,7 @@ package lsd.wheel.db
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import lsd.wheel.db.dao.UserTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -12,7 +13,7 @@ fun initDatabase(config: HikariConfig): Database {
 
     transaction {
         // TODO add all tables
-        createMissingTablesAndColumns()
+        createMissingTablesAndColumns(UserTable)
     }
 
     return db
