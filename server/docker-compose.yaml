@@ -1,0 +1,27 @@
+version: "2"
+services:
+  postgres:
+    image: library/postgres:latest
+    container_name: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root --db-name game-server"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    env_file:
+      - .env
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    restart: always
+  game-server:
+    build: .
+    container_name: game-server
+    depends_on:
+      - postgres
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    restart: always

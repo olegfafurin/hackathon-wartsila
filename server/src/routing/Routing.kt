@@ -1,7 +1,9 @@
 package lsd.wheel.routing
 
+import io.ktor.routing.*
+
 abstract class Routing(val endpoint: String) {
 
-    abstract fun install()
+    abstract val install: Route.() -> Unit
 
 }

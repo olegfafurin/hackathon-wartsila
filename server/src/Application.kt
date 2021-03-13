@@ -14,6 +14,7 @@ import io.ktor.auth.jwt.*
 import io.ktor.jackson.*
 import lsd.wheel.auth.JWTInstance
 import lsd.wheel.db.initDatabase
+import lsd.wheel.routing.UserRouting
 import lsd.wheel.service.UserService
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -49,11 +50,7 @@ fun Application.module(testing: Boolean = false) {
             realm = "***.wheel"
             validate { credentials ->
                 val login = credentials.payload.getClaim("login")
-                when {
-                    login.isNull -> null
-                    UserService.getUserByLogin() == null -> null
-                    else -> JWTPrincipal(credentials.payload)
-                }
+                if (login.isNull) null else UserService.getUserByLogin(login.asString())
             }
         }
     }
@@ -65,5 +62,13 @@ fun Application.module(testing: Boolean = false) {
     }
 
     initDatabase("resources/db.properties")
+
+    routing {
+        get("/") {
+            call.respond("Ok")
+        }
+
+        (UserRouting("user").install)()
+    }
 }
 
