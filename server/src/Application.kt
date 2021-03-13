@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.*
 import io.ktor.auth.jwt.*
 import io.ktor.jackson.*
 import lsd.wheel.auth.JWTInstance
+import lsd.wheel.db.initDatabase
 import lsd.wheel.service.UserService
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -63,16 +64,6 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
-    routing {
-        post("login") {
-            data class UserForm(
-                val login: String,
-                val password: String
-            )
-
-            val userData = context.receive<UserForm>()
-
-        }
-    }
+    initDatabase("resources/db.properties")
 }
 
