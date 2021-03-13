@@ -17,4 +17,14 @@ object UserService {
         !UserEntity.find { (UserTable.login eq login) and (UserTable.passwordHash eq CryptoHash.encode(password)) }
             .empty()
 
+    fun addUser(userLogin: String, password: String): Boolean {
+        return if (UserEntity.find { UserTable.login eq userLogin }.empty()) {
+            UserEntity.new {
+                login = userLogin
+                passwordHash = CryptoHash.encode(password)
+                rating = 0
+            }
+            true
+        } else false
+    }
 }
