@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>Wartsila game</h1>
-    <Radar></Radar>
+    <Radar :size="300"></Radar>
   </div>
 </template>
 
