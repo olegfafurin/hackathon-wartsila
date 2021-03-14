@@ -1,24 +1,24 @@
 package lsd.wheel
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.sessions.*
-import io.ktor.features.*
-import org.slf4j.event.*
-import io.ktor.auth.*
-import com.fasterxml.jackson.databind.*
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.zaxxer.hikari.HikariConfig
+import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.auth.jwt.*
+import io.ktor.features.*
+import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.jackson.*
+import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.routing.*
 import lsd.wheel.auth.JWTInstance
 import lsd.wheel.db.initDatabase
 import lsd.wheel.routing.GameRouting
 import lsd.wheel.routing.UserRouting
-import lsd.wheel.service.GameService
 import lsd.wheel.service.UserService
+import org.slf4j.event.Level
+import java.io.File
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -76,6 +76,13 @@ fun Application.module(testing: Boolean = false) {
     routing {
         get("/") {
             call.respond("Ok")
+        }
+
+        static("assets") {
+            staticRootFolder = File("assets")
+            static("images") {
+                files("images")
+            }
         }
 
         (UserRouting("user").install)()
