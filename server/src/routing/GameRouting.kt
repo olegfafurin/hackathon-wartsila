@@ -10,7 +10,6 @@ import io.ktor.routing.*
 import lsd.wheel.game.Direction
 import lsd.wheel.game.GameManager
 import lsd.wheel.service.data.User
-import lsd.wheel.service.data.game.MineItem
 
 /**
  * created by imd on 14.03.2021
