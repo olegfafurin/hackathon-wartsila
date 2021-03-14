@@ -76,14 +76,30 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
 
                 post("/move") {
                     val user = call.principal<User>()!!
-                    val moveDirection = context.receive<Direction>()
                     val game = gameManager.getGameByUsername(user.login)
                     if (game == null) {
                         call.respond(mapOf("status" to "ERROR"))
                         return@post
                     }
                     val player = game.usernameToPlayer[user.login]!!
-                    game.makeMove(player, moveDirection)
+                    game.makeMove(player, player.direction)
+                    call.respond(
+                        mapOf(
+                            "status" to "OK",
+                        )
+                    )
+                }
+
+                post("/rotate") {
+                    val user = call.principal<User>()!!
+                    val quarters = call.receive<Int>()
+                    val game = gameManager.getGameByUsername(user.login)
+                    if (game == null) {
+                        call.respond(mapOf("status" to "ERROR"))
+                        return@post
+                    }
+                    val player = game.usernameToPlayer[user.login]!!
+                    player.direction = Direction.by((player.direction.id + quarters + 4) % 4)
                     call.respond(
                         mapOf(
                             "status" to "OK",
