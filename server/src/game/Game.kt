@@ -2,10 +2,7 @@ package lsd.wheel.game
 
 import lsd.wheel.game.Direction.Companion.rotate
 import lsd.wheel.service.data.User
-import lsd.wheel.service.data.game.Edge
-import lsd.wheel.service.data.game.Field
-import lsd.wheel.service.data.game.Item
-import lsd.wheel.service.data.game.Vertex
+import lsd.wheel.service.data.game.*
 import kotlin.random.Random
 
 class Game(
@@ -22,7 +19,8 @@ class Game(
     )
 
     fun addPlayer(username: String) {
-        val newPlayer = Player(username, Random(System.nanoTime()).nextInt() % field.vertices.size + 1, Direction.NORTH)
+        val newPlayer = Player(username, Random(System.nanoTime()).nextInt() % field.vertices.size, Direction.NORTH)
+        updateKnownVertices(newPlayer)
         players.add(newPlayer)
         usernameToPlayer.putIfAbsent(username, newPlayer)
     }
@@ -70,6 +68,17 @@ class Game(
         player.direction = incomingDirection.rotate(2)
         updateKnownVertices(player)
         return true
+    }
+
+    fun setMine(player: Player): Boolean {
+        if (player.items.filterIsInstance<MineItem>().isNotEmpty()) {
+            val someMine = player.items.filterIsInstance<MineItem>().first()
+            val removeIndex = player.items.indexOf(someMine)
+            player.items.removeAt(removeIndex)
+            field.vertices[player.vertexNo].hasMine = true
+            return true
+        }
+        return false
     }
 
 }
