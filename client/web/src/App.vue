@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <Game msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
+
   </div>
 </template>
 
