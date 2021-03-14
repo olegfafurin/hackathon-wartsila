@@ -56,6 +56,7 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                     if (game.isDead(player)) {
                         game.removePlayer(player)
                         call.respond(mapOf("status" to "GAME_OVER"))
+                        return@get
                     }
                     val knownField = game.getKnownSubfield(player)
                     call.respond(
@@ -63,7 +64,9 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                             "status" to "OK",
                             "field" to knownField,
                             "currentPoint" to game.getCurrentVertex(player),
-                            "currentDirection" to player.direction
+                            "currentDirection" to player.direction,
+                            "playerHealth" to player.health,
+                            "playerItems" to player.items
                         )
                     )
                 }
@@ -71,11 +74,21 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                     val user = call.principal<User>()!!
                     val game = gameManager.getGameByUsername(user.login)!!
                     val player = game.usernameToPlayer[user.login]!!
+                    if (game.isDead(player)) {
+                        game.removePlayer(player)
+                        call.respond(mapOf("status" to "GAME_OVER"))
+                        return@post
+                    }
+                    if (!game.isCurrentPlayer(player)) {
+                        call.respond(mapOf("status" to "Not your turn"))
+                        return@post
+                    }
                     call.respond(
                         mapOf(
                             "status" to if (game.setMine(player)) "OK" else "ERROR",
                         )
                     )
+                    game.nextPlayer()
                 }
 
                 post("/move") {
@@ -86,12 +99,22 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         return@post
                     }
                     val player = game.usernameToPlayer[user.login]!!
+                    if (game.isDead(player)) {
+                        game.removePlayer(player)
+                        call.respond(mapOf("status" to "GAME_OVER"))
+                        return@post
+                    }
+                    if (!game.isCurrentPlayer(player)) {
+                        call.respond(mapOf("status" to "Not your turn"))
+                        return@post
+                    }
                     game.makeMove(player, player.direction)
                     call.respond(
                         mapOf(
                             "status" to "OK",
                         )
                     )
+                    game.nextPlayer()
                 }
 
                 post("/rotate") {
@@ -103,6 +126,15 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         return@post
                     }
                     val player = game.usernameToPlayer[user.login]!!
+                    if (game.isDead(player)) {
+                        game.removePlayer(player)
+                        call.respond(mapOf("status" to "GAME_OVER"))
+                        return@post
+                    }
+                    if (!game.isCurrentPlayer(player)) {
+                        call.respond(mapOf("status" to "Not your turn"))
+                        return@post
+                    }
                     player.direction = Direction.by((player.direction.id + quarters + 4) % 4)
                     call.respond(
                         mapOf(
@@ -110,7 +142,6 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         )
                     )
                 }
-
 
                 post("/fire") {
                     val user = call.principal<User>()!!
@@ -120,12 +151,22 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         return@post
                     }
                     val player = game.usernameToPlayer[user.login]!!
+                    if (game.isDead(player)) {
+                        game.removePlayer(player)
+                        call.respond(mapOf("status" to "GAME_OVER"))
+                        return@post
+                    }
+                    if (!game.isCurrentPlayer(player)) {
+                        call.respond(mapOf("status" to "Not your turn"))
+                        return@post
+                    }
                     call.respond(
                         mapOf(
                             "status" to "OK",
                             "success" to player.fire()
                         )
                     )
+                    game.nextPlayer()
                 }
 
             }

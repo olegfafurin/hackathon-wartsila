@@ -6,7 +6,7 @@ data class Vertex(
     val id: Int,
     val x: Int,
     val y: Int,
-    val items: MutableList<Item>,
+    var items: MutableList<Item>,
     val edges: MutableMap<Direction, Int>,
     var hasMine: Boolean = false
 )
