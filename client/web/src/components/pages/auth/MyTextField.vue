@@ -25,6 +25,7 @@
 <style scoped>
     .inp-container{
         position: relative;
+        width: 100%;
     }
     .my-input {
         position: absolute;

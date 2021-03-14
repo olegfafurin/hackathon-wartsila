@@ -15,7 +15,7 @@
                     <div class="amount-indicator">{{playerData.mines}}</div>
                 </div>
                 <div class='money'>
-                    <img src="http://ferrisgame.ru:8080/assets/images/coin.png">
+                    <img style="height: 32px; " src="http://ferrisgame.ru:8080/assets/images/coin.png">
                     <div class="amount-indicator">{{playerData.money}}</div>
                 </div>
                 <div class="hp-indicator">

@@ -67,10 +67,15 @@
 
 <style scoped>
 .button-group{
-    width: 400px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    align-content: center;
 }
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+
+    }
 </style>
