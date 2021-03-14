@@ -9,7 +9,10 @@
     export default {
         name: "MyTextField",
         props: {
-            value: Object
+            value: Object,
+            size: {
+
+            }
         }
     }
 </script>

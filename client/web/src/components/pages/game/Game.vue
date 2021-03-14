@@ -77,6 +77,7 @@
                             missiles: 0,
                             mines: 0,
                             hp: 0,
+                            enemies: [],
                             status: "GAME_OVER"
                         };
                         return 0
@@ -85,7 +86,8 @@
                             missiles: r.data.playerItems.missiles,
                             mines: r.data.playerItems.mines,
                             hp: r.data.playerHealth,
-                            status: r.data.status
+                            status: r.data.status,
+                            enemies: r.data.neighbors,
                         };
                     }
 
