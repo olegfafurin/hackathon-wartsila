@@ -69,6 +69,26 @@
             getField() {
                 api($axios).getField().then(r => {
                     console.log(r.data.field);
+
+
+                    if(r.data.status === "GAME_OVER"){
+                        alert("GAME OVER");
+                        this.playerData = {
+                            missiles: 0,
+                            mines: 0,
+                            hp: 0,
+                            status: "GAME_OVER"
+                        };
+                        return 0
+                    } else {
+                        this.playerData = {
+                            missiles: r.data.playerItems.missiles,
+                            mines: r.data.playerItems.mines,
+                            hp: r.data.playerHealth,
+                            status: r.data.status
+                        };
+                    }
+
                     let v = [];
                     for (let e in r.data.field.edges) {
                         for (let p in r.data.field.edges[e].path) {
@@ -94,13 +114,8 @@
                             dir: r.data.currentDirection[0]
                         },
                     };
+                    setTimeout(this.getField, 1000);
 
-                    this.playerData = {
-                        missiles: r.data.playerItems.missiles,
-                        mines: r.data.playerItems.mines,
-                        hp: r.data.playerHealth,
-                        status: r.data.status
-                    }
                     return r.data;
                 }).catch(e => {
                     console.log(e)
