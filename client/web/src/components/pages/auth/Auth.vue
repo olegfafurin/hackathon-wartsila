@@ -12,8 +12,8 @@
         <input type='text' name='password' v-model='password'>
       </label>
       <div class="btn-group">
-        <MyButton @click='doRegister' :size="160" text="Регистрация"></MyButton>
-        <MyButton @click='doLogin' :size="160" text="Вход"></MyButton>
+        <MyButton :onclick='doRegister' :size="160" text="Регистрация"></MyButton>
+        <MyButton :onclick='doLogin' :size="160" text="Вход"></MyButton>
       </div>
     </div>
   </div>

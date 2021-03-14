@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Radar :size="radarSize" :map="radarData.map" :in-game="true"></Radar>
+        <Radar :size="radarSize" :map="radarData.map" :in-game="false"></Radar>
         <ControlPanel :size="controlSize"/>
     </div>
 </template>
@@ -327,9 +327,11 @@
             window.addEventListener("resize", this.myEventHandler);
             api($axios).createRoom().then(r => {
                 console.log(r.data);
+                console.log('комната создалась');
                 setInterval(this.getField, 10000);
             }).catch(e => {
-                console.log(e)
+                console.log(e);
+                console.log('комната не создалась')
             })
 
         },
