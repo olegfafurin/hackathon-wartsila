@@ -66,7 +66,7 @@ fun Application.module(testing: Boolean = false) {
         jdbcUrl = "jdbc:postgresql://localhost:5432/game"
         driverClassName = "org.postgresql.Driver"
         username = "postgres"
-        password = "postgres"
+        password = "password"
         maximumPoolSize = 4
         transactionIsolation = "TRANSACTION_READ_COMMITTED"
     })
