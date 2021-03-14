@@ -104,8 +104,9 @@ class Game(
         player.direction = incomingDirection.rotate(2)
         updateKnownVertices(player)
         val items = field.vertices[newVertexNo].items
+        player.health -= items.count { it is Babah }
         field.vertices[newVertexNo].items = mutableListOf()
-        player.items.addAll(items)
+        player.items.addAll(items.filter { it !is Babah })
         return true
     }
 

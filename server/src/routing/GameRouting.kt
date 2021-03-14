@@ -9,6 +9,7 @@ import io.ktor.routing.*
 import lsd.wheel.game.Direction
 import lsd.wheel.game.GameManager
 import lsd.wheel.service.data.User
+import lsd.wheel.service.data.game.Babah
 import lsd.wheel.service.data.game.MineItem
 import lsd.wheel.service.data.game.Missile
 
@@ -92,9 +93,10 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         return@post
                     }
                     player.items.removeAt(player.items.indexOfFirst { it is MineItem })
+                    game.getCurrentVertex(player).items.add(Babah())
                     call.respond(
                         mapOf(
-                            "status" to if (game.setMine(player)) "OK" else "ERROR",
+                            "status" to "OK",
                         )
                     )
                     game.nextPlayer()
@@ -118,6 +120,11 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         return@post
                     }
                     game.makeMove(player, player.direction)
+                    if (game.isDead(player)) {
+                        game.removePlayer(player)
+                        call.respond(mapOf("status" to "GAME_OVER"))
+                        return@post
+                    }
                     call.respond(
                         mapOf(
                             "status" to "OK",
