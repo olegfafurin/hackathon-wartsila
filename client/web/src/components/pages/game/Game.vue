@@ -2,15 +2,17 @@
     <div class="hello">
         <h1>Wartsila game</h1>
         <Radar :size="300" :map="radarData.map"></Radar>
+        <ButtonsBlock/>
     </div>
 </template>
 
 <script>
     import Radar from "@/components/pages/game/controls/radar/Radar";
+    import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
 
     export default {
         name: 'Game',
-        components: {Radar},
+        components: {ButtonsBlock, Radar},
         props: {
             msg: String
         },
