@@ -251,7 +251,6 @@
                             }
                         ],
                         vertexes: [
-
                             {
                                 id: 0,
                                 x: 2,
@@ -325,7 +324,7 @@
         },
         created() {
             window.addEventListener("resize", this.myEventHandler);
-            api($axios).createRoom("random").then(r => {
+            api($axios).createRoom("239").then(r => {
                 console.log(r.data);
                 console.log('комната создалась');
                 setInterval(this.getField, 10000);
@@ -341,7 +340,31 @@
         methods: {
             getField() {
                 api($axios).getField().then(r => {
-                    console.log(r.data);
+                    console.log(r.data.field);
+                    let v = [];
+                    for(let e in r.data.field.edges){
+                        console.log(e);
+                        for(let p in r.data.field.edges[e].path){
+                            v.push({
+                                x: r.data.field.edges[e].path[p].first,
+                                y: r.data.field.edges[e].path[p].second
+                            })
+                        }
+                    }
+                    console.log("vershiny");
+                    console.log(v);
+                    this.radarData.map = {
+                        pathPoints: v,
+                        vertexes: r.data.field.vertices,
+                        logic: {
+                            current: {
+                                id: 0,
+                                x: 2,
+                                y: 6,
+                            },
+                            dir: "N"
+                        },
+                    }
                     return r.data;
                 }).catch(e => {
                     console.log(e)

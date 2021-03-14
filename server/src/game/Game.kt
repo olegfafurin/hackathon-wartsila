@@ -14,6 +14,7 @@ class Game(
         val username: String,
         var vertexNo: Int,
         var direction: Direction,
+        var health: Int = 3,
         var balance: Int = 0,
         var health: Int = 3,
         val items: MutableList<Item> = mutableListOf()
