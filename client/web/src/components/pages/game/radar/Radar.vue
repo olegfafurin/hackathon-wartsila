@@ -4,7 +4,7 @@
              class="radar-sprite"/>
         <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
              :style="addShiftToStyle(p, ppSize, gridSize/smallifier) + (p.active ? 'background: radial-gradient(lightgreen 0%, #lightgreen 30%, #FFFFFF00 60%);' : '')">
-            <img src="http://localhost.ru:8080/images/point.png" alt="точка" style="width:100%; height:100%"/>
+            <img src="http://ferrisgame.ru:8080/assets/images/.png" alt="точка" style="width:100%; height:100%"/>
         </div>
         <Point v-for='p in points'
                :key='p.id'

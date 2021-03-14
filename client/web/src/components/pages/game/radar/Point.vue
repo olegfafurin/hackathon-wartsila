@@ -1,6 +1,6 @@
 <template>
     <div :class="className" :style="stylePosition">
-        <img src="http://localhost.ru:8080/images/point.png" alt="точка" style="width:100%; height:100%"/>
+        <img src="http://ferrisgame.ru:8080/assets/images/.png" alt="точка" style="width:100%; height:100%"/>
     </div>
 </template>
 
