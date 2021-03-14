@@ -3,8 +3,10 @@
         <label>
             <input type='text' name='roomId' :value='roomId'>
         </label>
-        <my-button :size="150" v-if='emptyId' :onclick='createRoom'>Создать игру</my-button>
-        <my-button :size="150" v-else :onclick='joinRoom'>Присоединиться</my-button>
+        <div class="button-group">
+            <my-button :size="150" :onclick='createRoom' :text="'Создать игру'"></my-button>
+            <my-button :size="150" :onclick='joinRoom' :text="'Присоединиться'"></my-button>
+        </div>
     </div>
 </template>
 
@@ -53,5 +55,11 @@
 </script>
 
 <style scoped>
+.button-group{
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
+}
 </style>
