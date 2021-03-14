@@ -60,16 +60,7 @@
             }
         },
         created() {
-            window.addEventListener("resize", this.myEventHandler);
-            api($axios).createRoom(Math.random().toString()).then(r => {
-                console.log(r.data);
-                console.log('комната создалась');
-                setInterval(this.getField, 1000);
-            }).catch(e => {
-                console.log(e);
-                console.log('комната не создалась')
-            })
-
+            window.addEventListener("resize", this.myEventHandler)
         },
         destroyed() {
             window.removeEventListener("resize", this.myEventHandler);
