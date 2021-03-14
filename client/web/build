@@ -3,3 +3,7 @@
 npm run build
 rm -rf ../../server/dist
 cp -r dist ../../server
+
+cd ../../server
+./gradlew build
+./gradlew run
