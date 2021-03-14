@@ -1,23 +1,29 @@
 <template>
-  <div class='all'>
-    <div class="control-container" :style="containerStyle">
-        <div class="top-controls">
-            <img src="http://ferrisgame.ru:8080/assets/images/cabin.png" alt="Фон" class="background-img"/>
+    <div class='all'>
+        <div class="control-container" :style="containerStyle">
+            <div class="top-controls">
+                <img src="http://ferrisgame.ru:8080/assets/images/cabin.png" alt="Фон" class="background-img"/>
+            </div>
+            <div class="bottom-controls" :style="bottomStyle">
+                <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон"
+                     class="background-img"/>
+                <ButtonsBlock :matrix="move"/>
+                <div>
+                    <SpritedButton btn-name="missleF" :onclick="fire"/>
+                    <SpritedButton btn-name="mine" :onclick="mine"/>
+                </div>
+                <Timer current="12" total="72"/>
+            </div>
+            <!--        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
         </div>
-        <div class="bottom-controls" :style="bottomStyle">
-            <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон" class="background-img"/>
-            <ButtonsBlock :matrix="move"/>
-            <ButtonsBlock :matrix="fire"/>
-            <Timer current="12" total="72"/>
-        </div>
-<!--        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
     </div>
-  </div>
 </template>
 
 <script>
     import Timer from "@/components/pages/game/controls/Timer";
     import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
+    import api from "@/axios/api";
+    import $axios from "@/axios/instance";
 
     export default {
         name: "ControlPanel",
@@ -29,19 +35,12 @@
             }
         },
         data() {
-            return{
+            return {
                 move:
-                [
-                    [false,"forward",false],
-                    ["left",false,"right"],
-                    [false,"back",false]
-                ],
-                fire:
-                [
-                    [false,"missleF",false],
-                    ["missleL","mine","missleR"],
-                    [false,"missleB",false]
-                ],
+                    [
+                        [false, "forward", false],
+                        ["left", "back", "right"],
+                    ],
             }
         },
         computed: {
@@ -49,7 +48,25 @@
                 return "height:" + this.size.h + "px; width:" + this.size.w + "px;"
             },
             bottomStyle() {
-                return "height:" + this.size.w /3 + "px; width:" + this.size.w + "px; padding: " + this.size.w/30 + "px " + this.size.w/20 + "px;"
+                return "height:" + this.size.w / 3 + "px; width:" + this.size.w + "px; padding: " + this.size.w / 30 + "px " + this.size.w / 20 + "px;"
+            }
+        },
+        methods: {
+            fire() {
+                api($axios).fire().then(r => {
+                    console.log(r.data);
+                    return r.data;
+                }).catch(e => {
+                    console.log(e)
+                })
+            },
+            mine() {
+                api($axios).mine().then(r => {
+                    console.log(r.data);
+                    return r.data;
+                }).catch(e => {
+                    console.log(e)
+                })
             }
         }
     }

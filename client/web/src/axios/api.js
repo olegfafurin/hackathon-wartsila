@@ -26,8 +26,11 @@ export default function (axios) {
         rotate(quaters) {
             return axios.post('/game/rotate', quaters)
         },
-        fire(direction) {
-            return axios.post('/game/fire', direction)
+        fire() {
+            return axios.post('/game/fire')
+        },
+        mine() {
+            return axios.post('/game/set-mine')
         }
     }
 }
