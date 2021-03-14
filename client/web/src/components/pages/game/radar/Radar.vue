@@ -2,7 +2,9 @@
     <div class="radar-container" :style="compStyle">
         <img src="http://ferrisgame.ru:8080/assets/images/radar.png" alt="Фон радара" :style="compStyle" class="radar-sprite"/>
         <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
-             :style="addShiftToStyle(p, ppSize, gridSize/smallifier)"/>
+             :style="addShiftToStyle(p, ppSize, gridSize/smallifier) + (p.active ? 'background: white' : '')">
+            <img src="http://localhost.ru:8080/images/point.png" alt="точка" style="width:100%; height:100%"/>
+        </div>
         <Point v-for='p in points'
                :key='p.id'
                :current="p.current"
@@ -14,6 +16,7 @@
              alt="игрок"
              :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize),2*gridSize)"
              class="player-icon"/>
+        <div class="radar-shadow"/>
         <img src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle" class="radar-sprite"/>
 
     </div>
@@ -98,7 +101,6 @@
 
     .path-point {
         position: absolute;
-        background-color: aquamarine;
 
     }
 
@@ -110,5 +112,13 @@
         position: absolute;
         top: 0;
         left: 0;
+    }
+    .radar-shadow{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(#00000000 0%, #00000000 40%, #2c3e50 60%);
     }
 </style>
