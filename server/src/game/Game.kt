@@ -10,6 +10,12 @@ class Game(
     private val players: MutableList<Player>
 ) {
 
+    init {
+        field.vertices[0].items.add(Missile(1))
+        field.vertices[field.vertices.size / 2].items.add(MineItem(2))
+        field.vertices[field.vertices.size - 1].items.add(Missile(1))
+    }
+
     private var currentPlayer = 0
 
     fun isCurrentPlayer(player: Player): Boolean {
@@ -26,7 +32,7 @@ class Game(
         var direction: Direction,
         var balance: Int = 0,
         var health: Int = 3,
-        val items: MutableList<Item> = mutableListOf()
+        val items: MutableList<Item> = mutableListOf(Missile(1))
     ) {
 
         fun fire(): Boolean {
@@ -98,8 +104,9 @@ class Game(
         player.direction = incomingDirection.rotate(2)
         updateKnownVertices(player)
         val items = field.vertices[newVertexNo].items
+        player.health -= items.count { it is Babah }
         field.vertices[newVertexNo].items = mutableListOf()
-        player.items.addAll(items)
+        player.items.addAll(items.filter { it !is Babah })
         return true
     }
 
@@ -118,9 +125,11 @@ class Game(
 
     fun removePlayer(player: Player) {
         val index = players.indexOfFirst { it.username == player.username }
-        players.removeAt(index)
-        if (index < currentPlayer) {
-            currentPlayer--
+        if (index > -1) {
+            players.removeAt(index)
+            if (index < currentPlayer) {
+                currentPlayer--
+            }
         }
     }
 }
