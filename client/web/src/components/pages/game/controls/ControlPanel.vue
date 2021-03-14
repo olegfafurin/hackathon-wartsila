@@ -4,7 +4,7 @@
             <div class="top-controls" v-if="size.w/size.h <1.5 && size.w/size.h >0.67">
                 <img src="http://ferrisgame.ru:8080/assets/images/cabin.png" alt="Фон" class="background-img"/>
             </div>
-            <div class="bottom-controls" :style="bottomStyle">
+            <div :class="'bottom-controls' + ( (size.w/size.h <1.5 && size.w/size.h >0.67) ? '': 'all-space')" :style="bottomStyle">
                 <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон"
                      class="background-img"/>
                 <ButtonsBlock :matrix="move"/>
@@ -15,12 +15,12 @@
                     <div class="amount-indicator">{{playerData.mines}}</div>
                 </div>
                 <div class='money'>
-                    Score: {{playerData.money}}
+                    <img style="height: 32px; " src="http://ferrisgame.ru:8080/assets/images/coin.png">
+                    <div class="amount-indicator">{{playerData.money}}</div>
                 </div>
                 <div class="hp-indicator">
                     <img :src="'http://ferrisgame.ru:8080/assets/images/hp'+playerData.hp +'.png'" :alt="playerData.hp"/>
                 </div>
-                <Timer current="12" total="72"/>
             </div>
             <!--        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
         </div>
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-    import Timer from "@/components/pages/game/controls/Timer";
     import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
     import api from "@/axios/api";
     import $axios from "@/axios/instance";
@@ -36,7 +35,7 @@
 
     export default {
         name: "ControlPanel",
-        components: {SpritedButton, ButtonsBlock, Timer},
+        components: {SpritedButton, ButtonsBlock},
         props: {
             size: {
                 w: Number,
@@ -143,5 +142,10 @@
         display: flex;
         flex-direction: column-reverse;
         padding-right: 5px;
+    }
+
+    .all-space {
+        width: 100%;
+        height: 100%;
     }
 </style>

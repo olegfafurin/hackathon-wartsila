@@ -55,18 +55,30 @@
                     missiles: 0,
                     mines: 0,
                     hp: 3,
+                    enemies: [],
+                    money: 0,
                     status: 'WAITING',
                 }
             }
         },
         created() {
-            window.addEventListener("resize", this.myEventHandler)
+            window.addEventListener("resize", this.myEventHandler);
+            this.playerData = {
+                missiles: 0,
+                mines: 0,
+                hp: 3,
+                enemies: [],
+                money: 0,
+                status: 'WAITING',
+            }
         },
         destroyed() {
             window.removeEventListener("resize", this.myEventHandler);
         },
         methods: {
             getField() {
+                console.log("getting Field");
+
                 api($axios).getField().then(r => {
                     console.log(r.data.field);
 
