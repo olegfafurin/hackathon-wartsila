@@ -14,6 +14,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import lsd.wheel.auth.JWTInstance
 import lsd.wheel.db.initDatabase
+import lsd.wheel.routing.GameRouting
 import lsd.wheel.routing.UserRouting
 import lsd.wheel.service.UserService
 import org.slf4j.event.Level
@@ -84,6 +85,7 @@ fun Application.module(testing: Boolean = false) {
         }
 
         (UserRouting("user").install)()
+        (GameRouting("game").install)()
     }
 }
 
