@@ -120,6 +120,15 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         return@post
                     }
                     val ok = game.makeMove(player, player.direction)
+                    if (!ok) {
+                        call.respond(
+                            mapOf(
+                                "status" to "OK",
+                                "blocked" to true
+                            )
+                        )
+                        return@post
+                    }
                     if (game.isDead(player)) {
                         game.removePlayer(player)
                         call.respond(mapOf("status" to "GAME_OVER"))
@@ -128,7 +137,6 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                     call.respond(
                         mapOf(
                             "status" to "OK",
-                            "blocked" to !ok
                         )
                     )
                     game.nextPlayer()
