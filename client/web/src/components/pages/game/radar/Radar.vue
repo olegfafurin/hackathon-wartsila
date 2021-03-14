@@ -11,7 +11,8 @@
                :size="gridSize">
         </Point>
         <img src='@/assets/player.png'
-             alt="игрок" :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize),2*gridSize)"
+             alt="игрок"
+             :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize),2*gridSize)"
              class="player-icon"/>
         <img src="@/assets/radar-border.png" alt="Рамка радара" :style="compStyle" class="radar-sprite"/>
 
@@ -53,7 +54,7 @@
                 const p = this.calcPosition(pos);
                 return base_style + " border-radius:2rem; left:" + (p.x - size / 2) + "px; top:" + (p.y - size / 2) + "px;"
             },
-            getSizeStyle(s){
+            getSizeStyle(s) {
                 return "height:" + s + "px; width:" + s + "px; "
             }
         },
@@ -80,9 +81,9 @@
                 return "height:" + this.size + "px; width:" + this.size + "px;"
             },
             ppSize() {
-                return "height:" + this.gridSize/this.smallifier + "px; width:" + this.gridSize/this.smallifier + "px; "
+                return "height:" + this.gridSize / this.smallifier + "px; width:" + this.gridSize / this.smallifier + "px; "
             },
-            smallifier(){
+            smallifier() {
                 console.log(this.map.pathPoints.length);
                 return Math.sqrt(Math.sqrt(this.map.pathPoints.length))
             }
@@ -105,9 +106,9 @@
         position: absolute;
     }
 
-    .radar-sprite{
+    .radar-sprite {
         position: absolute;
-        top:0;
+        top: 0;
         left: 0;
     }
 </style>

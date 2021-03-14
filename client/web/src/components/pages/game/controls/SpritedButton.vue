@@ -13,7 +13,8 @@
         },
         computed: {
             fullPath() {
-                return "@/assets/" + this.btnName + ".png";
+                console.log("http://localhost:8080/" + this.btnName + ".png");
+                return "http://localhost:8080//" + this.btnName + ".png";
             }
         }
     }

@@ -3,8 +3,8 @@
         <div class="bottom-controls">
             <Timer/>
             <div class="button-blocks">
-                <ButtonsBlock/>
-                <ButtonsBlock/>
+                <ButtonsBlock :matrix="move"/>
+                <ButtonsBlock :matrix="fire"/>
             </div>
         </div>
         <img src="@/assets/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>
@@ -22,6 +22,22 @@
             size: {
                 w: Number,
                 h: Number,
+            }
+        },
+        data() {
+            return{
+                move:
+                [
+                    [false,"forward",false],
+                    ["left",false,"right"],
+                    [false,"back",false]
+                ],
+                fire:
+                [
+                    [false,"missleF",false],
+                    ["missleL","mine","missleR"],
+                    [false,"missleB",false]
+                ],
             }
         },
         computed: {
