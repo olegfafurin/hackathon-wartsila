@@ -11,13 +11,13 @@ export default function (axios) {
         },
 
         createRoom() {
-            return axios.post('/game/createRoom')
+            return axios.post('/game/create-room')
         },
         joinRoom(roomId) {
-            return axios.post('/game/joinRoom', {roomId})
+            return axios.post('/game/join-room', {roomId})
         },
         getField() {
-            return axios.get('/game/getField')
+            return axios.get('/game/get-field')
         }
     }
 }

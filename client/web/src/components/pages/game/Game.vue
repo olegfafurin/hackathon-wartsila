@@ -8,6 +8,8 @@
 <script>
     import Radar from "@/components/pages/game/radar/Radar";
     import ControlPanel from "@/components/pages/game/controls/ControlPanel";
+    import api from "@/axios/api";
+    import $axios from "@/axios/instance";
 
     export default {
         name: 'Game',
@@ -298,11 +300,20 @@
         },
         created() {
             window.addEventListener("resize", this.myEventHandler);
+            // setInterval(this.getField, 1000);
         },
         destroyed() {
             window.removeEventListener("resize", this.myEventHandler);
         },
         methods: {
+            getField() {
+                api($axios).getField().then(r => {
+                    console.log(r.data);
+                    return r.data;
+                }).catch(e => {
+                    console.log(e)
+                })
+            },
             myEventHandler(e) {
                 console.log(e);
                 this.radarSize = this.getRadarSize();
