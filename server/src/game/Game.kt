@@ -110,8 +110,8 @@ class Game(
         val neighbors = vertex.edges.filterValues { !field.edges[it].blocked }.values.map {
             val edge = field.edges[it]
             edge.vertex1 + edge.vertex2 - vertex.id
-        }
-        return players.filter { it.vertexNo in neighbors }.map { field.vertices[it.vertexNo] }
+        } + vertex.id
+        return players.filter { it.username != player.username && it.vertexNo in neighbors }.map { field.vertices[it.vertexNo] }
     }
 
     fun makeMove(player: Player, direction: Direction): Boolean {
