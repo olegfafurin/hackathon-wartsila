@@ -2,7 +2,7 @@
     <div class="radar-container" :style="compStyle">
         <img src="@/assets/radar.png" alt="Фон радара" :style="compStyle" class="radar-sprite"/>
         <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
-             :style="addShiftToStyle(p, ppSize, 5)"/>
+             :style="addShiftToStyle(p, ppSize, gridSize/smallifier)"/>
         <Point v-for='p in points'
                :key='p.id'
                :current="p.current"
@@ -11,7 +11,7 @@
                :size="gridSize">
         </Point>
         <img src='@/assets/player.png'
-             alt="игрок" :style="addShiftToStyle({x:0, y:0},getSizeStyle(4*gridSize),4*gridSize)"
+             alt="игрок" :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize),2*gridSize)"
              class="player-icon"/>
         <img src="@/assets/radar-border.png" alt="Рамка радара" :style="compStyle" class="radar-sprite"/>
 
@@ -59,7 +59,7 @@
         },
         computed: {
             gridSize() {
-                return this.size / 30;
+                return this.size / 20;
             },
             shift() {
                 return {
@@ -80,9 +80,12 @@
                 return "height:" + this.size + "px; width:" + this.size + "px;"
             },
             ppSize() {
-                const range = 60;
-                return "height:" + this.size / range + "px; width:" + this.size / range + "px; "
+                return "height:" + this.gridSize/this.smallifier + "px; width:" + this.gridSize/this.smallifier + "px; "
             },
+            smallifier(){
+                console.log(this.map.pathPoints.length);
+                return Math.sqrt(Math.sqrt(this.map.pathPoints.length))
+            }
         }
     }
 </script>
