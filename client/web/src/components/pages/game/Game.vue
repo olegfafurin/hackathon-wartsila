@@ -78,7 +78,8 @@
                             mines: 0,
                             hp: 0,
                             enemies: [],
-                            status: "GAME_OVER"
+                            status: "GAME_OVER",
+                            money: 0
                         };
                         return 0
                     } else {
@@ -88,6 +89,7 @@
                             hp: r.data.playerHealth,
                             status: r.data.status,
                             enemies: r.data.neighbors,
+                            money: r.data.playerItems.money
                         };
                     }
 
