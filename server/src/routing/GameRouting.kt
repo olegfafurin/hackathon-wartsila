@@ -7,6 +7,7 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import lsd.wheel.game.Direction
 import lsd.wheel.game.GameManager
 import lsd.wheel.service.data.User
 
@@ -32,9 +33,48 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
             post("/find-room") {
                 val user = call.principal<User>()!!
                 val roomName = context.receive<String>()
-                gameManager.addUserToGame(user, roomName)
-                val field = gameManager.getGameByUser(user)?.getKnownSubfield(user)!!
-                call.respond(field)
+                val roomFound = gameManager.addUserToGame(user, roomName)
+                call.respond(
+                    mapOf(
+                        "status" to if (roomFound) "OK" else "ERROR",
+                    )
+                )
+            }
+
+            get("/field") {
+                val user = call.principal<User>()!!
+                val knownField = gameManager.getGameByUser(user)?.getKnownSubfield(user) ?: call.respond(
+                    mapOf(
+                        "status" to "ERROR",
+                    )
+                )
+                call.respond(
+                    mapOf(
+                        "status" to "OK",
+                        "field" to knownField
+                    )
+                )
+            }
+
+            post("/move") {
+                val user = call.principal<User>()!!
+                val moveDirection = context.receive<Direction>()
+                val game = gameManager.getGameByUser(user)
+                if (game == null) {
+                    call.respond(
+                        mapOf(
+                            "status" to "ERROR",
+                        )
+                    )
+                    return@post
+                }
+                val player = game.getPlayer(user)!!
+                game.makeMove(player, moveDirection)
+                call.respond(
+                    mapOf(
+                        "status" to "OK",
+                    )
+                )
             }
         }
     }

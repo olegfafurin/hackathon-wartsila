@@ -15,6 +15,7 @@ import io.ktor.auth.jwt.*
 import io.ktor.jackson.*
 import lsd.wheel.auth.JWTInstance
 import lsd.wheel.db.initDatabase
+import lsd.wheel.routing.GameRouting
 import lsd.wheel.routing.UserRouting
 import lsd.wheel.service.GameService
 import lsd.wheel.service.UserService
@@ -78,6 +79,9 @@ fun Application.module(testing: Boolean = false) {
         }
 
         (UserRouting("user").install)()
+        (GameRouting("game").install)()
     }
+
+//    GameService.getFieldById(1)
 }
 
