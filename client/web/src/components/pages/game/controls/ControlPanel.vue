@@ -1,6 +1,5 @@
 <template>
   <div class='all'>
-    <router-view></router-view>
     <div class="control-container" :style="containerStyle">
         <div class="top-controls">
             <img src="http://localhost:8080/images/cabin.png" alt="Фон" class="background-img"/>
