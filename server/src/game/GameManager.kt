@@ -2,30 +2,29 @@ package lsd.wheel.game
 
 import lsd.wheel.service.GameService
 import lsd.wheel.service.data.User
-import kotlin.random.Random
 
 object GameManager {
 
     private val games: MutableMap<String, Game> = mutableMapOf()
 
-    private val userGame: MutableMap<User, Game> = mutableMapOf()
+    private val usernameGame: MutableMap<String, Game> = mutableMapOf()
 
-    fun createGame(user: User, roomName: String): Boolean {
+    fun createGame(username: String, roomName: String): Boolean {
         if (roomName in games.keys) return false
         val newField = GameService.getFieldById(1) // TODO field generation
-        val newGame = Game(newField, mutableListOf(user))
+        val newGame = Game(newField, mutableListOf())
         games[roomName] = newGame
-        userGame[user] = newGame
+        addUserToGame(username, roomName)
         return true
     }
 
-    fun addUserToGame(user: User, roomName: String): Boolean {
+    fun addUserToGame(username: String, roomName: String): Boolean {
         val game = games[roomName] ?: return false
-        game.addUser(user)
-        userGame[user] = game
+        game.addPlayer(username)
+        usernameGame[username] = game
         return true
     }
 
-    fun getGameByUser(user: User): Game? = userGame[user]
+    fun getGameByUsername(username: String): Game? = usernameGame[username]
 
 }

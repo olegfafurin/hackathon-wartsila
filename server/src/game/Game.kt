@@ -1,52 +1,75 @@
 package lsd.wheel.game
 
+import lsd.wheel.game.Direction.Companion.rotate
 import lsd.wheel.service.data.User
 import lsd.wheel.service.data.game.Edge
 import lsd.wheel.service.data.game.Field
+import lsd.wheel.service.data.game.Item
 import lsd.wheel.service.data.game.Vertex
+import kotlin.random.Random
 
 class Game(
     private val field: Field,
-    private val users: MutableList<User>
+    private val players: MutableList<Player>
 ) {
 
     inner class Player(
-        val user: User,
-        val vertexNo: Int,
-        val direction: Direction
+        val username: String,
+        var vertexNo: Int,
+        var direction: Direction,
+        var balance: Int = 0,
+        val items: MutableList<Item> = mutableListOf()
     )
 
-    fun addUser(user: User) {
-        users.add(user)
+    fun addPlayer(username: String) {
+        val newPlayer = Player(username, Random(System.nanoTime()).nextInt() % field.vertices.size + 1, Direction.NORTH)
+        players.add(newPlayer)
+        usernameToPlayer.putIfAbsent(username, newPlayer)
     }
 
-    private val userToPlayer: MutableMap<User, Player> = mutableMapOf()
+    val usernameToPlayer: MutableMap<String, Player> = mutableMapOf()
 
-    private val knownVertices: MutableMap<User, MutableSet<Int>> = mutableMapOf()
-    private val knownEdges: MutableMap<User, MutableSet<Int>> = mutableMapOf()
+    private val knownVertices: MutableMap<Player, MutableSet<Int>> = mutableMapOf()
+    private val knownEdges: MutableMap<Player, MutableSet<Int>> = mutableMapOf()
 
-    private fun updateKnownVertices(user: User) {
-        val currentVertex = getCurrentVertex(user)
-        knownVertices[user]?.add(currentVertex.id)
-        for (edge in getEdges(currentVertex)) {
-            knownEdges[user]?.add(edge.id)
-            knownVertices[user]?.add(edge.vertex1 + edge.vertex2 - currentVertex.id)
-        }
-    }
-
-    private fun getCurrentVertex(user: User) = field.vertices[userToPlayer[user]?.vertexNo!!]
+    private fun getCurrentVertex(player: Player) = field.vertices[player.vertexNo]
 
     private fun getEdges(vertex: Vertex): List<Edge> = vertex.edges.values.map { field.edges[it] }
 
     private fun getNeighbours(vertex: Vertex): List<Vertex> =
         getEdges(vertex).map { field.vertices[it.vertex1 + it.vertex2 - vertex.id] }
 
-    fun getKnownSubfield(user: User): Field {
+    fun getKnownSubfield(player: Player): Field {
         return Field(
             field.name,
-            field.vertices.filter { knownVertices.getOrDefault(user, mutableSetOf()).contains(it.id) }, // TODO remove objects from nodes
-            field.edges.filter { knownEdges.getOrDefault(user, mutableSetOf()).contains(it.id) })
+            field.vertices.filter { knownVertices.getOrDefault(player, mutableSetOf()).contains(it.id) }
+                .map {
+                    return@map if (it.id == getCurrentVertex(player).id || it in getNeighbours(getCurrentVertex(player))) it else it.copy(
+                        items = mutableListOf(),
+                        edges = mutableMapOf()
+                    )
+                }, // TODO remove objects from nodes
+            field.edges.filter { knownEdges.getOrDefault(player, mutableSetOf()).contains(it.id) })
     }
 
+    private fun updateKnownVertices(player: Player) {
+        val currentVertex = getCurrentVertex(player)
+        knownVertices[player]?.add(currentVertex.id)
+        for (edge in getEdges(currentVertex)) {
+            knownEdges[player]?.add(edge.id)
+            knownVertices[player]?.add(edge.vertex1 + edge.vertex2 - currentVertex.id)
+        }
+    }
+
+    fun makeMove(player: Player, direction: Direction): Boolean {
+        val outgoingEdge = field.edges[field.vertices[player.vertexNo].edges[direction] ?: return false]
+        val newVertexNo = outgoingEdge.vertex1 + outgoingEdge.vertex2 - player.vertexNo
+        player.vertexNo = newVertexNo
+        val incomingDirection =
+            field.vertices[newVertexNo].edges.filterValues { it == outgoingEdge.id }.keys.first() // the only edge equals to current
+        player.direction = incomingDirection.rotate(2)
+        updateKnownVertices(player)
+        return true
+    }
 
 }

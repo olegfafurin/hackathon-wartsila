@@ -6,6 +6,7 @@ import io.ktor.auth.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import lsd.wheel.game.Direction
 import lsd.wheel.game.GameManager
 import lsd.wheel.service.data.User
 
@@ -19,30 +20,72 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
     private val objectMapper = ObjectMapper()
 
     override val install: Route.() -> Unit = {
-        route("/$endpoint") {
-            authenticate {
-                post("/create-room") {
-                    val user = call.principal<User>()!!
-                    val roomName = context.receive<String>()
-                    gameManager.createGame(user, roomName)
-                    val field = gameManager.getGameByUser(user)?.getKnownSubfield(user)!!
-                    call.respond(field)
-                }
+        authenticate {
+            post("/create-room") {
+                val user = call.principal<User>()!!
+                val roomName = context.receive<String>()
+                val gameCreated = gameManager.createGame(user.login, roomName)
+                call.respond(
+                    mapOf(
+                        "status" to if (gameCreated) "OK" else "ERROR",
+                    )
+                )
+            }
 
-                post("/find-room") {
-                    val user = call.principal<User>()!!
-                    val roomName = context.receive<String>()
-                    gameManager.addUserToGame(user, roomName)
-                    val field = gameManager.getGameByUser(user)?.getKnownSubfield(user)!!
-                    call.respond(field)
-                }
+            post("/find-room") {
+                val user = call.principal<User>()!!
+                val roomName = context.receive<String>()
+                val roomFound = gameManager.addUserToGame(user.login, roomName)
+                call.respond(
+                    mapOf(
+                        "status" to if (roomFound) "OK" else "ERROR",
+                    )
+                )
+            }
 
-                get("/get-field") {
-                    val user = call.principal<User>()!!
-                    val game = gameManager.getGameByUser(user)
-                    val field = game?.getKnownSubfield(user)
-                    call.respond(field!!)
+            get("/field") {
+                val user = call.principal<User>()!!
+                val game = gameManager.getGameByUsername(user.login)
+                if (game == null) {
+                    call.respond(mapOf("status" to "ERROR"))
+                    return@get
                 }
+                val player = game.usernameToPlayer[user.login]!!
+                val knownField = game.getKnownSubfield(player)
+                call.respond(
+                    mapOf(
+                        "status" to "OK",
+                        "field" to knownField
+                    )
+                )
+            }
+
+            post("/move") {
+                val user = call.principal<User>()!!
+                val moveDirection = context.receive<Direction>()
+                val game = gameManager.getGameByUsername(user.login)
+                if (game == null) {
+                    call.respond(mapOf("status" to "ERROR"))
+                    return@post
+                }
+                val player = game.usernameToPlayer[user.login]!!
+                game.makeMove(player, moveDirection)
+                call.respond(
+                    mapOf(
+                        "status" to "OK",
+                    )
+                )
+            }
+            post("/move") {
+
+            }
+
+            get("/get-field") {
+                val user = call.principal<User>()!!
+                val game = gameManager.getGameByUsername(user.login)!!
+                val player = game.usernameToPlayer[user.login]!!
+                val field = game.getKnownSubfield(player)
+                call.respond(field)
             }
         }
     }

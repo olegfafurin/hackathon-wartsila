@@ -86,5 +86,7 @@ fun Application.module(testing: Boolean = false) {
         (UserRouting("user").install)()
         (GameRouting("game").install)()
     }
+
+//    GameService.getFieldById(1)
 }
 
