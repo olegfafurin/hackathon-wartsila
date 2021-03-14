@@ -12,11 +12,21 @@ class Game(
 ) {
 
     init {
-        field.vertices[0].items.add(Missile(1))
-        field.vertices[field.vertices.size / 2].items.add(MineItem(2))
-        field.vertices[field.vertices.size - 1].items.add(Missile(1))
+        for (i in 0..(field.vertices.size / 2)) {
+            val t = Random.nextInt(4)
+            field.vertices[Random.nextInt(field.vertices.size)].items.add(
+                when {
+                    t < 1 -> MineItem(2)
+                    t < 3 -> Missile(1)
+                    else -> Box(100, Random.nextInt(100))
+                }
+            )
+        }
 
         field.edges.forEach {
+            if (Random.nextInt(5) == 0) {
+                it.blocked = true
+            }
             if (it.blocked) {
                 it.path = mutableListOf()
             }
@@ -105,6 +115,15 @@ class Game(
         }
     }
 
+    fun neighboringPlayers(player: Player): List<Vertex> {
+        val vertex = getCurrentVertex(player)
+        val neighbors = vertex.edges.filterValues { !field.edges[it].blocked }.values.map {
+            val edge = field.edges[it]
+            edge.vertex1 + edge.vertex2 - vertex.id
+        } + vertex.id
+        return players.filter { it.username != player.username && it.vertexNo in neighbors }.map { field.vertices[it.vertexNo] }
+    }
+
     fun makeMove(player: Player, direction: Direction): Boolean {
         val outgoingEdge = field.edges[field.vertices[player.vertexNo].edges[direction] ?: return false]
         if (outgoingEdge.blocked) {
@@ -119,7 +138,8 @@ class Game(
         val items = field.vertices[newVertexNo].items
         player.health -= items.count { it is Babah }
         field.vertices[newVertexNo].items = mutableListOf()
-        player.items.addAll(items.filter { it !is Babah })
+        player.items.addAll(items.filter { it !is Babah && it !is Box })
+        player.balance += items.filterIsInstance<Box>().sumBy { it.value }
         return true
     }
 
