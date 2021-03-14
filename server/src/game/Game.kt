@@ -2,10 +2,7 @@ package lsd.wheel.game
 
 import lsd.wheel.game.Direction.Companion.rotate
 import lsd.wheel.service.data.User
-import lsd.wheel.service.data.game.Edge
-import lsd.wheel.service.data.game.Field
-import lsd.wheel.service.data.game.Item
-import lsd.wheel.service.data.game.Vertex
+import lsd.wheel.service.data.game.*
 import kotlin.random.Random
 
 class Game(
@@ -18,11 +15,34 @@ class Game(
         var vertexNo: Int,
         var direction: Direction,
         var balance: Int = 0,
+        var health: Int = 3,
         val items: MutableList<Item> = mutableListOf()
-    )
+    ) {
+
+        fun fire(): Boolean {
+            var vertex = vertexNo
+            var dir = direction
+            while (true) {
+                val outgoingEdge = field.edges[field.vertices[vertex].edges[dir]!!]
+                if (outgoingEdge.blocked) {
+                    return false
+                }
+                vertex = outgoingEdge.vertex1 + outgoingEdge.vertex2 - vertex
+                dir = field.vertices[vertex].edges.filterValues { it == outgoingEdge.id }.keys.first()
+                val target = players.firstOrNull { it.vertexNo == vertex } ?: continue
+                target.health -= 1
+                if (target.health == 0) {
+                    // TODO kill player
+                }
+                return true
+            }
+        }
+
+    }
 
     fun addPlayer(username: String) {
-        val newPlayer = Player(username, Random(System.nanoTime()).nextInt() % field.vertices.size + 1, Direction.NORTH)
+        val newPlayer = Player(username, Random(System.nanoTime()).nextInt() % field.vertices.size, Direction.NORTH)
+        updateKnownVertices(newPlayer)
         players.add(newPlayer)
         usernameToPlayer.putIfAbsent(username, newPlayer)
         updateKnownVertices(newPlayer)
@@ -71,6 +91,17 @@ class Game(
         player.direction = incomingDirection.rotate(2)
         updateKnownVertices(player)
         return true
+    }
+
+    fun setMine(player: Player): Boolean {
+        if (player.items.filterIsInstance<MineItem>().isNotEmpty()) {
+            val someMine = player.items.filterIsInstance<MineItem>().first()
+            val removeIndex = player.items.indexOf(someMine)
+            player.items.removeAt(removeIndex)
+            field.vertices[player.vertexNo].hasMine = true
+            return true
+        }
+        return false
     }
 
 }
