@@ -288,19 +288,33 @@
                     },
                     root: Number,
                     size: Number, //radar size in px
-                }
+                },
+                radarSize: Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight),
+                controlSize: Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight),
             }
         },
-        computed:{
-            radarSize(){
+        created() {
+            window.addEventListener("resize", this.myEventHandler);
+        },
+        destroyed() {
+            window.removeEventListener("resize", this.myEventHandler);
+        },
+        methods: {
+            myEventHandler(e) {
+                console.log(e);
+                this.radarSize = this.getRadarSize();
+                this.controlSize = this.getControlSize();
+
+            },
+            getRadarSize(){
                 return Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight);
             },
-            controlSize(){
+            getControlSize(){
                 const dw = document.documentElement.clientWidth;
                 const dh = document.documentElement.clientHeight;
                 return{
-                    w: dw === this.radarSize ? dw : (dw - this.radarSize),
-                    h: dh === this.radarSize ? dh : (dh - this.radarSize),
+                    w: dw === this.radarSize ? dw : (dw - this.getRadarSize()),
+                    h: dh === this.radarSize ? dh : (dh - this.getRadarSize()),
                 }
             }
         }

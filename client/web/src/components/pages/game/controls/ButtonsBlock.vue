@@ -1,16 +1,17 @@
 <template>
     <div class="button-container" :style="compStyle">
-        <SpritedButton btn-name="b11" :empty="true"/>
-        <SpritedButton btn-name="b12"/>
-        <SpritedButton btn-name="b13" :empty="true"/>
+        <SpritedButton :btn-name="matrix[0][0]" :empty="!matrix[0][0]"/>
+        <SpritedButton :btn-name="matrix[0][1]" :empty="!matrix[0][1]"/>
+        <SpritedButton :btn-name="matrix[0][2]" :empty="!matrix[0][2]"/>
 
-        <SpritedButton btn-name="b21"/>
-        <SpritedButton btn-name="b22" :empty="true"/>
-        <SpritedButton btn-name="b23"/>
+        <SpritedButton :btn-name="matrix[1][0]" :empty="!matrix[1][0]"/>
+        <SpritedButton :btn-name="matrix[1][1]" :empty="!matrix[1][1]"/>
+        <SpritedButton :btn-name="matrix[1][2]" :empty="!matrix[1][2]"/>
 
-        <SpritedButton btn-name="b31" :empty="true"/>
-        <SpritedButton btn-name="b32"/>
-        <SpritedButton btn-name="b33" :empty="true" />
+        <SpritedButton :btn-name="matrix[2][0]" :empty="!matrix[2][0]"/>
+        <SpritedButton :btn-name="matrix[2][1]" :empty="!matrix[2][1]"/>
+        <SpritedButton :btn-name="matrix[2][2]" :empty="!matrix[2][2]"/>
+
     </div>
 </template>
 
@@ -22,8 +23,9 @@
         components: {SpritedButton},
         props: {
             size: Number,
+            matrix: []
         },
-        computed:{
+        computed: {
             compStyle() {
                 return "height:" + this.size + "px; width:" + this.size + "px;"
             }
