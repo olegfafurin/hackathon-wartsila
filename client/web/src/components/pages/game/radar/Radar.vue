@@ -51,10 +51,6 @@
         },
         methods: {
             calcPosition(pos) {
-                let bx = pos.x;
-                let by = pos.y;
-                console.log(bx, by);
-
                 return {
                     x: pos.x * this.gridSize + this.shift.x,
                     y: pos.y * this.gridSize + this.shift.y,
@@ -70,13 +66,13 @@
         },
         computed: {
             getRotation(){
+                console.log(this.map.logic.dir);
                 if (this.map.logic.dir === "N")
                     return  "transform: rotate(0deg);";
-                else  if (this.map.logic.dir === "W")
+                else  if (this.map.logic.dir === "E")
                     return  "transform: rotate(90deg);";
                 else  if (this.map.logic.dir === "S")
                     return  "transform: rotate(180deg);";
-
                 return  "transform: rotate(-90deg);";
 
             },

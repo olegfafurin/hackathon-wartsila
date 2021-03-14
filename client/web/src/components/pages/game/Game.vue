@@ -59,7 +59,7 @@
             api($axios).createRoom(Math.random().toString()).then(r => {
                 console.log(r.data);
                 console.log('комната создалась');
-                setInterval(this.getField, 200);
+                setInterval(this.getField, 1000);
             }).catch(e => {
                 console.log(e);
                 console.log('комната не создалась')
@@ -75,7 +75,6 @@
                     console.log(r.data.field);
                     let v = [];
                     for(let e in r.data.field.edges){
-                        console.log(e);
                         for(let p in r.data.field.edges[e].path){
                             v.push({
                                 x: r.data.field.edges[e].path[p].first,
@@ -83,8 +82,6 @@
                             })
                         }
                     }
-                    console.log("vershiny");
-                    console.log(v);
                     this.radarData.map = {
                         pathPoints: v,
                         vertexes: r.data.field.vertices.map((p) => {
