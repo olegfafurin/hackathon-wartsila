@@ -4,6 +4,6 @@ data class Edge(
     val id: Int,
     val vertex1: Int,
     val vertex2: Int,
-    val blocked: Boolean,
+    var blocked: Boolean,
     var path: List<Pair<Int, Int>>
 )
