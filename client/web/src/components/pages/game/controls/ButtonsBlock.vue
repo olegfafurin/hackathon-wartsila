@@ -1,5 +1,5 @@
 <template>
-    <div class="button-container">
+    <div class="button-container" :style="compStyle">
         <SpritedButton btn-name="b11" :empty="true"/>
         <SpritedButton btn-name="b12"/>
         <SpritedButton btn-name="b13" :empty="true"/>
@@ -19,7 +19,15 @@
 
     export default {
         name: "ButtonsBlock",
-        components: {SpritedButton}
+        components: {SpritedButton},
+        props: {
+            size: Number,
+        },
+        computed:{
+            compStyle() {
+                return "height:" + this.size + "px; width:" + this.size + "px;"
+            }
+        }
     }
 </script>
 

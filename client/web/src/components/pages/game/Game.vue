@@ -1,18 +1,17 @@
 <template>
-    <div class="hello">
-        <h1>Wartsila game</h1>
-        <Radar :size="300" :map="radarData.map"></Radar>
-        <ButtonsBlock/>
+    <div class="container">
+        <Radar :size="radarSize" :map="radarData.map"></Radar>
+        <ControlPanel/>
     </div>
 </template>
 
 <script>
-    import Radar from "@/components/pages/game/controls/radar/Radar";
-    import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
+    import Radar from "@/components/pages/game/radar/Radar";
+    import ControlPanel from "@/components/pages/game/controls/ControlPanel";
 
     export default {
         name: 'Game',
-        components: {ButtonsBlock, Radar},
+        components: {ControlPanel, Radar},
         props: {
             msg: String
         },
@@ -24,46 +23,264 @@
                     map: {
                         pathPoints: [
                             {
-                                x: 0,
-                                y: 0,
-                            }, {
-                                x: 0,
-                                y: 1,
-                            }, {
-                                x: 0,
-                                y: 2,
-                            }, {
-                                x: 0,
-                                y: 3,
-                            }, {
-                                x: 0,
-                                y: 4,
-                            }, {
-                                x: 0,
-                                y: 5,
-                            }, {
-                                x: 0,
-                                y: 6,
+                                x: 1,
+                                y: 6
                             },
+                            {
+                                x: 0,
+                                y: 7
+                            },
+                            {
+                                x: 0,
+                                y: 8
+                            },
+                            {
+                                x: 1,
+                                y: 9
+                            },
+                            {
+                                x: 2,
+                                y: 9
+                            },
+                            {
+                                x: 3,
+                                y: 9
+                            },
+                            {
+                                x: 4,
+                                y: 9
+                            },
+                            {
+                                x: 5,
+                                y: 9
+                            },
+                            {
+                                x: 6,
+                                y: 9
+                            },
+                            {
+                                x: 7,
+                                y: 9
+                            },
+                            {
+                                x: 8,
+                                y: 9
+                            },
+                            {
+                                x: 9,
+                                y: 8
+                            },
+                            {
+                                x: 10,
+                                y: 7
+                            },
+                            {
+                                x: 10,
+                                y: 6
+                            },
+                            {
+                                x: 10,
+                                y: 5
+                            },
+                            {
+                                x: 10,
+                                y: 4
+                            },
+                            {
+                                x: 9,
+                                y: 3
+                            },
+                            {
+                                x: 2,
+                                y: 7
+                            },
+                            {
+                                x: 3,
+                                y: 8
+                            },
+                            {
+                                x: 4,
+                                y: 8
+                            },
+                            {
+                                x: 5,
+                                y: 7
+                            },
+                            {
+                                x: 3,
+                                y: 6
+                            },
+                            {
+                                x: 4,
+                                y: 6
+                            },
+                            {
+                                x: 2,
+                                y: 5
+                            },
+                            {
+                                x: 2,
+                                y: 4
+                            },
+                            {
+                                x: 5,
+                                y: 5
+                            },
+                            {
+                                x: 5,
+                                y: 4
+                            },
+                            {
+                                x: 3,
+                                y: 4
+                            },
+                            {
+                                x: 4,
+                                y: 3
+                            },
+                            {
+                                x: 2,
+                                y: 2
+                            },
+                            {
+                                x: 3,
+                                y: 1
+                            },
+                            {
+                                x: 4,
+                                y: 1
+                            },
+                            {
+                                x: 5,
+                                y: 2
+                            },
+                            {
+                                x: 1,
+                                y: 3
+                            },
+                            {
+                                x: 0,
+                                y: 2
+                            },
+                            {
+                                x: 0,
+                                y: 1
+                            },
+                            {
+                                x: 1,
+                                y: 0
+                            },
+                            {
+                                x: 2,
+                                y: 0
+                            },
+                            {
+                                x: 3,
+                                y: 0
+                            },
+                            {
+                                x: 4,
+                                y: 0
+                            },
+                            {
+                                x: 5,
+                                y: 0
+                            },
+                            {
+                                x: 6,
+                                y: 0
+                            },
+                            {
+                                x: 7,
+                                y: 0
+                            },
+                            {
+                                x: 8,
+                                y: 1
+                            },
+                            {
+                                x: 8,
+                                y: 2
+                            },
+                            {
+                                x: 6,
+                                y: 3
+                            },
+                            {
+                                x: 7,
+                                y: 3
+                            },
+                            {
+                                x: 6,
+                                y: 6
+                            },
+                            {
+                                x: 7,
+                                y: 5
+                            },
+                            {
+                                x: 8,
+                                y: 4
+                            }
                         ],
                         vertexes: [
+
+                            {
+                                id: 0,
+                                x: 2,
+                                y: 6,
+                                items: [],
+                                edges: {
+                                    WEST: 0,
+                                    NORTH: 1,
+                                    EAST: 2,
+                                    SOUTH: 3
+                                }
+                            },
                             {
                                 id: 1,
-                                x: 0,
-                                y: 0,
+                                x: 5,
+                                y: 6,
+                                items: [],
+                                edges: {
+                                    SOUTH: 4,
+                                    EAST: 9
+                                }
                             },
                             {
                                 id: 2,
-                                x: 0,
-                                y: 6,
+                                x: 8,
+                                y: 3,
+                                items: [],
+                                edges: {}
                             },
+                            {
+                                id: 3,
+                                x: 5,
+                                y: 3,
+                                items: [],
+                                edges: {
+                                    SOUTH: 6,
+                                    EAST: 8
+                                }
+                            },
+                            {
+                                id: 4,
+                                x: 2,
+                                y: 3,
+                                items: [],
+                                edges: {
+                                    EAST: 5,
+                                    WEST: 7
+                                }
+                            }
 
                         ],
                         logic: {
                             current: {
-                                id: 1,
-                                x: 0,
-                                y: 0,
+                                id: 0,
+                                x: 2,
+                                y: 6,
                             },
                             dir: "N"
                         },
@@ -73,12 +290,17 @@
                     size: Number, //radar size in px
                 }
             }
+        },
+        computed:{
+            radarSize(){
+                return 100;
+            }
         }
 
     }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add scoped attribute to limit CSS to this component only -->
 <style scoped>
     h3 {
         margin: 40px 0 0;
@@ -96,5 +318,10 @@
 
     a {
         color: #42b983;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
     }
 </style>

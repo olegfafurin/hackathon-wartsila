@@ -2,7 +2,7 @@
     <div class="radar-container" :style="compStyle">
         <img src="@/assets/radar.png" alt="Фон радара" :style="compStyle" class="radar-sprite"/>
         <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
-             :style="addShiftToStyle(p, ppSize, 5)"/>
+             :style="addShiftToStyle(p, ppSize, gridSize/smallifier)"/>
         <Point v-for='p in points'
                :key='p.id'
                :current="p.current"
@@ -11,7 +11,7 @@
                :size="gridSize">
         </Point>
         <img src='@/assets/player.png'
-             alt="игрок" :style="addShiftToStyle({x:0, y:0},getSizeStyle(4*gridSize),4*gridSize)"
+             alt="игрок" :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize),2*gridSize)"
              class="player-icon"/>
         <img src="@/assets/radar-border.png" alt="Рамка радара" :style="compStyle" class="radar-sprite"/>
 
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import Point from "@/components/pages/game/controls/radar/Point";
+    import Point from "@/components/pages/game/radar/Point";
 
     export default {
         name: "Radar",
@@ -40,7 +40,7 @@
                 },
                 items: Object,
             },
-            size: Number, //radar size in px
+            size: Number, //radar size in vh
         },
         methods: {
             calcPosition(pos) {
@@ -51,15 +51,15 @@
             },
             addShiftToStyle(pos, base_style, size) {
                 const p = this.calcPosition(pos);
-                return base_style + " border-radius:2rem; left:" + (p.x - size / 2) + "px; top:" + (p.y - size / 2) + "px;"
+                return base_style + " border-radius:2rem; left:" + (p.x - size / 2) + "vh; top:" + (p.y - size / 2) + "vh;"
             },
             getSizeStyle(s){
-                return "height:" + s + "px; width:" + s + "px; "
+                return "height:" + s + "vh; width:" + s + "vh; "
             }
         },
         computed: {
             gridSize() {
-                return this.size / 30;
+                return this.size / 20;
             },
             shift() {
                 return {
@@ -77,12 +77,15 @@
                 })
             },
             compStyle() {
-                return "height:" + this.size + "px; width:" + this.size + "px;"
+                return "height:" + this.size + "vh; width:" + this.size + "vh;"
             },
             ppSize() {
-                const range = 60;
-                return "height:" + this.size / range + "px; width:" + this.size / range + "px; "
+                return "height:" + this.gridSize/this.smallifier + "vh; width:" + this.gridSize/this.smallifier + "vh; "
             },
+            smallifier(){
+                console.log(this.map.pathPoints.length);
+                return Math.sqrt(Math.sqrt(this.map.pathPoints.length))
+            }
         }
     }
 </script>

@@ -23,10 +23,10 @@
             stylePosition() {
                 console.log(this.size);
                 console.log(this.position.x);
-                const res = "left:" + (this.position.x - this.size / 2) + "px; top:" + (this.position.y - this.size / 2) + "px; " +
-                    "width: " + this.size + "px; " +
-                    "height: " + this.size + "px; " +
-                    (!this.current ? ("border-radius: " + this.size + "px; ") : "");
+                const res = "left:" + (this.position.x - this.size/2) + "vh; top:" + (this.position.y - this.size / 2) + "vh; " +
+                    "width: " + this.size + "vh; " +
+                    "height: " + this.size + "vh; " +
+                    (!this.current ? ("border-radius: " + this.size + "vh; ") : "");
                 console.log(res);
                 return res;
             }
