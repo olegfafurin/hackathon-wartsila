@@ -53,6 +53,10 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         return@get
                     }
                     val player = game.usernameToPlayer[user.login]!!
+                    if (game.isDead(player)) {
+                        game.removePlayer(player)
+                        call.respond(mapOf("status" to "GAME_OVER"))
+                    }
                     val knownField = game.getKnownSubfield(player)
                     call.respond(
                         mapOf(
