@@ -1,5 +1,6 @@
 package lsd.wheel.game
 
+import lsd.wheel.game.Direction.Companion.by
 import lsd.wheel.game.Direction.Companion.rotate
 import lsd.wheel.service.data.User
 import lsd.wheel.service.data.game.*
@@ -14,6 +15,12 @@ class Game(
         field.vertices[0].items.add(Missile(1))
         field.vertices[field.vertices.size / 2].items.add(MineItem(2))
         field.vertices[field.vertices.size - 1].items.add(Missile(1))
+
+        field.edges.forEach {
+            if (it.blocked) {
+                it.path = mutableListOf()
+            }
+        }
     }
 
     private var currentPlayer = 0
@@ -45,6 +52,7 @@ class Game(
                 }
                 vertex = outgoingEdge.vertex1 + outgoingEdge.vertex2 - vertex
                 dir = field.vertices[vertex].edges.filterValues { it == outgoingEdge.id }.keys.first()
+                dir = by((dir.id + 2) % 4)
                 val target = players.firstOrNull { it.vertexNo == vertex } ?: continue
                 target.health -= 1
                 return true
@@ -90,13 +98,18 @@ class Game(
         val currentVertex = getCurrentVertex(player)
         knownVertices.getValue(player).add(currentVertex.id)
         for (edge in getEdges(currentVertex)) {
-            knownEdges.getValue(player).add(edge.id)
-            knownVertices.getValue(player).add(edge.vertex1 + edge.vertex2 - currentVertex.id)
+            if (!edge.blocked) {
+                knownEdges.getValue(player).add(edge.id)
+                knownVertices.getValue(player).add(edge.vertex1 + edge.vertex2 - currentVertex.id)
+            }
         }
     }
 
     fun makeMove(player: Player, direction: Direction): Boolean {
         val outgoingEdge = field.edges[field.vertices[player.vertexNo].edges[direction] ?: return false]
+        if (outgoingEdge.blocked) {
+            return false
+        }
         val newVertexNo = outgoingEdge.vertex1 + outgoingEdge.vertex2 - player.vertexNo
         player.vertexNo = newVertexNo
         val incomingDirection =
