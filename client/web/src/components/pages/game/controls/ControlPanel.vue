@@ -138,5 +138,6 @@
     .hp-indicator{
         height: 100%;
         display: flex;
+        flex-direction: column-reverse;
     }
 </style>
