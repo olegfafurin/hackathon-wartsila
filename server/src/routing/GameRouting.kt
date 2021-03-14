@@ -10,6 +10,7 @@ import io.ktor.routing.*
 import lsd.wheel.game.Direction
 import lsd.wheel.game.GameManager
 import lsd.wheel.service.data.User
+import lsd.wheel.service.data.game.MineItem
 
 /**
  * created by imd on 14.03.2021
@@ -77,8 +78,15 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                     )
                 )
             }
-            post("/move") {
-
+            post("/set-mine") {
+                val user = call.principal<User>()!!
+                val game = gameManager.getGameByUsername(user.login)!!
+                val player = game.usernameToPlayer[user.login]!!
+                call.respond(
+                    mapOf(
+                        "status" to if (game.setMine(player)) "OK" else "ERROR",
+                    )
+                )
             }
 
             get("/get-field") {
