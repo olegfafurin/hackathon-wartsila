@@ -56,7 +56,9 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                     call.respond(
                         mapOf(
                             "status" to "OK",
-                            "field" to knownField
+                            "field" to knownField,
+                            "currentPoint" to game.getCurrentVertex(player),
+                            "currentDirection" to player.direction
                         )
                     )
                 }
@@ -76,6 +78,15 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                             "status" to "OK",
                         )
                     )
+                }
+
+                post("/fire") {
+                    val user = call.principal<User>()!!
+                    val game = gameManager.getGameByUsername(user.login)
+                    if (game == null) {
+                        call.respond(mapOf("status" to "ERROR"))
+                        return@post
+                    }
                 }
             }
         }

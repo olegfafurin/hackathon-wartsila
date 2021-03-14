@@ -35,7 +35,7 @@ class Game(
     private val knownVertices: MutableMap<Player, MutableSet<Int>> = mutableMapOf()
     private val knownEdges: MutableMap<Player, MutableSet<Int>> = mutableMapOf()
 
-    private fun getCurrentVertex(player: Player) = field.vertices[player.vertexNo]
+    fun getCurrentVertex(player: Player) = field.vertices[player.vertexNo]
 
     private fun getEdges(vertex: Vertex): List<Edge> = vertex.edges.values.map { field.edges[it] }
 
