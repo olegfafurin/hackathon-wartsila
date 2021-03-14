@@ -36,7 +36,6 @@
 <style scoped>
     .button-container {
         display: grid;
-        height: 100%;
         grid-template-rows: 25% 25% 25%; /* 3 строки */
         grid-template-columns: 25% 25% 25%; /* 3 столбца */
         gap: 1em;

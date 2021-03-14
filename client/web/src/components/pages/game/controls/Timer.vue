@@ -1,6 +1,6 @@
 <template>
     <div class="timer-container">
-        <img src="@/assets/timer.png" alt="Часики-то тикают" class="timer-img">
+        <img src="http://ferrisgame.ru:8080/assets/images/timer.png" alt="Часики-то тикают" class="timer-img">
     </div>
 </template>
 
