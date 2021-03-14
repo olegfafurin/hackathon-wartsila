@@ -57,7 +57,9 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                     call.respond(
                         mapOf(
                             "status" to "OK",
-                            "field" to knownField
+                            "field" to knownField,
+                            "currentPoint" to game.getCurrentVertex(player),
+                            "currentDirection" to player.direction
                         )
                     )
                 }
