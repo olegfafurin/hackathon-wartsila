@@ -25,7 +25,7 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
             post("/create-room") {
                 val user = call.principal<User>()!!
                 val roomName = context.receive<String>()
-                val gameCreated = gameManager.createGame(user, roomName)
+                val gameCreated = gameManager.createGame(user.login, roomName)
                 call.respond(
                     mapOf(
                         "status" to if (gameCreated) "OK" else "ERROR",
@@ -36,7 +36,7 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
             post("/find-room") {
                 val user = call.principal<User>()!!
                 val roomName = context.receive<String>()
-                val roomFound = gameManager.addUserToGame(user, roomName)
+                val roomFound = gameManager.addUserToGame(user.login, roomName)
                 call.respond(
                     mapOf(
                         "status" to if (roomFound) "OK" else "ERROR",
@@ -46,11 +46,13 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
 
             get("/field") {
                 val user = call.principal<User>()!!
-                val knownField = gameManager.getGameByUser(user)?.getKnownSubfield(user) ?: call.respond(
-                    mapOf(
-                        "status" to "ERROR",
-                    )
-                )
+                val game = gameManager.getGameByUsername(user.login)
+                if (game == null) {
+                    call.respond(mapOf("status" to "ERROR"))
+                    return@get
+                }
+                val player = game.usernameToPlayer[user.login]!!
+                val knownField = game.getKnownSubfield(player)
                 call.respond(
                     mapOf(
                         "status" to "OK",
@@ -62,22 +64,21 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
             post("/move") {
                 val user = call.principal<User>()!!
                 val moveDirection = context.receive<Direction>()
-                val game = gameManager.getGameByUser(user)
+                val game = gameManager.getGameByUsername(user.login)
                 if (game == null) {
-                    call.respond(
-                        mapOf(
-                            "status" to "ERROR",
-                        )
-                    )
+                    call.respond(mapOf("status" to "ERROR"))
                     return@post
                 }
-                val player = game.getPlayer(user)!!
+                val player = game.usernameToPlayer[user.login]!!
                 game.makeMove(player, moveDirection)
                 call.respond(
                     mapOf(
                         "status" to "OK",
                     )
                 )
+            }
+            post("/move") {
+
             }
         }
     }
