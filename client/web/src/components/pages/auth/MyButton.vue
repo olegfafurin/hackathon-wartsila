@@ -1,6 +1,6 @@
 <template>
     <div :style="'height: 50px; width:'+size+'px'" class="my-btn" @click="onclick">
-        <img src="http://localhost.ru:8080/images/button.png" alt="кнопка"
+        <img src="http://ferrisgame.ru:8080/assets/images/button.png" alt="кнопка"
              :style="'position: absolute; left:0; top:0; width:'+size+'px; height:50px;'"/>
         <div class="btn-text">{{text}}</div>
     </div>
