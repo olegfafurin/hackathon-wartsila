@@ -23,6 +23,8 @@ class Game(
 
     fun addPlayer(username: String) {
         val newPlayer = Player(username, Random(System.nanoTime()).nextInt(field.vertices.size), Direction.NORTH)
+        knownVertices[newPlayer] = mutableSetOf()
+        knownEdges[newPlayer] = mutableSetOf()
         players.add(newPlayer)
         usernameToPlayer.putIfAbsent(username, newPlayer)
         updateKnownVertices(newPlayer)
@@ -55,10 +57,10 @@ class Game(
 
     private fun updateKnownVertices(player: Player) {
         val currentVertex = getCurrentVertex(player)
-        knownVertices[player]?.add(currentVertex.id)
+        knownVertices.getValue(player).add(currentVertex.id)
         for (edge in getEdges(currentVertex)) {
-            knownEdges[player]?.add(edge.id)
-            knownVertices[player]?.add(edge.vertex1 + edge.vertex2 - currentVertex.id)
+            knownEdges.getValue(player).add(edge.id)
+            knownVertices.getValue(player).add(edge.vertex1 + edge.vertex2 - currentVertex.id)
         }
     }
 
