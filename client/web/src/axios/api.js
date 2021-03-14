@@ -20,8 +20,11 @@ export default function (axios) {
         getField() {
             return axios.get('/game/get-field')
         },
-        move(direction) {
-            return axios.post('/game/move', direction)
+        move() {
+            return axios.post('/game/move')
+        },
+        rotate(quaters) {
+            return axios.post('/game/rotate', quaters)
         },
         fire(direction) {
             return axios.post('/game/fire', direction)

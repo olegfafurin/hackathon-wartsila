@@ -107,6 +107,7 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                     )
                 }
 
+
                 post("/fire") {
                     val user = call.principal<User>()!!
                     val game = gameManager.getGameByUsername(user.login)
@@ -122,18 +123,9 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         )
                     )
                 }
-            }
-            post("/set-mine") {
-                val user = call.principal<User>()!!
-                val game = gameManager.getGameByUsername(user.login)!!
-                val player = game.usernameToPlayer[user.login]!!
-                call.respond(
-                    mapOf(
-                        "status" to if (game.setMine(player)) "OK" else "ERROR",
-                    )
-                )
+
             }
         }
     }
 
-}   
+}

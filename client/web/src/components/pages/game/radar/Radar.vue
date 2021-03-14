@@ -15,11 +15,11 @@
         </Point>
         <img src='http://ferrisgame.ru:8080/assets/images/arrow.png'
              alt="игрок"
-             :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize),2*gridSize)"
+             :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize) + getRotation,2*gridSize)"
              class="player-icon"/>
         <div class="radar-shadow"/>
         <img src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
-             class="radar-sprite high" />
+             class="radar-sprite high"/>
 
     </div>
 </template>
@@ -51,6 +51,10 @@
         },
         methods: {
             calcPosition(pos) {
+                let bx = pos.x;
+                let by = pos.y;
+                console.log(bx, by);
+
                 return {
                     x: pos.x * this.gridSize + this.shift.x,
                     y: pos.y * this.gridSize + this.shift.y,
@@ -65,6 +69,17 @@
             }
         },
         computed: {
+            getRotation(){
+                if (this.map.logic.dir === "N")
+                    return  "transform: rotate(0deg);";
+                else  if (this.map.logic.dir === "W")
+                    return  "transform: rotate(90deg);";
+                else  if (this.map.logic.dir === "S")
+                    return  "transform: rotate(180deg);";
+
+                return  "transform: rotate(-90deg);";
+
+            },
             gridSize() {
                 return this.size / 20;
             },
@@ -100,15 +115,26 @@
 <style scoped>
     .radar-container {
         position: relative;
+        -webkit-transition: all 0.3s ease;;
+        -moz-transition: all 0.3s ease;;
+        -o-transition: all 0.3s ease;;
+        transition: all 0.3s ease;
     }
 
     .path-point {
         position: absolute;
-
+        -webkit-transition: all 0.3s ease;;
+        -moz-transition: all 0.3s ease;;
+        -o-transition: all 0.3s ease;;
+        transition: all 0.3s ease;
     }
 
     .player-icon {
         position: absolute;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     .radar-sprite {
@@ -128,7 +154,7 @@
         background: radial-gradient(#00000000 0%, #00000000 40%, #2c3e50 60%);
     }
 
-    .high{
+    .high {
         z-index: 300;
     }
 </style>

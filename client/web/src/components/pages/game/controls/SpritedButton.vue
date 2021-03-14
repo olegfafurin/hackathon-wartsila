@@ -1,5 +1,5 @@
 <template>
-    <div :class="empty? 'empty-button':'custom-button'">
+    <div :class="empty? 'empty-button':'custom-button'" @click="onclick">
         <img class="button-sprite" :src="fullPath" :alt="btnName"/>
     </div>
 </template>
@@ -9,7 +9,8 @@
         name: "SpritedButton",
         props: {
             btnName: String,
-            empty: Boolean
+            empty: Boolean,
+            onclick: Object
         },
         computed: {
             fullPath() {
