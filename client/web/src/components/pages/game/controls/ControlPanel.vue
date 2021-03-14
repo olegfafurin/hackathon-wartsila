@@ -4,7 +4,7 @@
             <div class="top-controls" v-if="size.w/size.h <1.5 && size.w/size.h >0.67">
                 <img src="http://ferrisgame.ru:8080/assets/images/cabin.png" alt="Фон" class="background-img"/>
             </div>
-            <div class="bottom-controls" :style="bottomStyle">
+            <div :class="'bottom-controls' + ( (size.w/size.h <1.5 && size.w/size.h >0.67) ? '': 'all-space')" :style="bottomStyle">
                 <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон"
                      class="background-img"/>
                 <ButtonsBlock :matrix="move"/>
@@ -142,5 +142,10 @@
         display: flex;
         flex-direction: column-reverse;
         padding-right: 5px;
+    }
+
+    .all-space {
+        width: 100%;
+        height: 100%;
     }
 </style>
