@@ -4,9 +4,9 @@
         <SpritedButton :btn-name="matrix[0][1]" :empty="!matrix[0][1]" :onclick="() => move()"/>
         <SpritedButton :btn-name="matrix[0][2]" :empty="!matrix[0][2]"/>
 
-        <SpritedButton :btn-name="matrix[1][0]" :empty="!matrix[1][0]" :onclick="() => rotate(3)"/>
+        <SpritedButton :btn-name="matrix[1][0]" :empty="!matrix[1][0]" :onclick="() => rotate(1)"/>
         <SpritedButton :btn-name="matrix[1][1]" :empty="!matrix[1][1]"/>
-        <SpritedButton :btn-name="matrix[1][2]" :empty="!matrix[1][2]" :onclick="() => rotate(1)"/>
+        <SpritedButton :btn-name="matrix[1][2]" :empty="!matrix[1][2]" :onclick="() => rotate(3)"/>
 
         <SpritedButton :btn-name="matrix[2][0]" :empty="!matrix[2][0]"/>
         <SpritedButton :btn-name="matrix[2][1]" :empty="!matrix[2][1]" :onclick="() => rotate(2)"/>

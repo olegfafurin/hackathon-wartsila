@@ -22,13 +22,10 @@
                 return "point" + (this.active ? " point-active" : "") + (this.current ? " point-current" : "")
             },
             stylePosition() {
-                console.log(this.size);
-                console.log(this.position.x);
                 const res = "left:" + (this.position.x - this.size / 2) + "px; top:" + (this.position.y - this.size / 2) + "px; " +
                     "width: " + this.size + "px; " +
                     "height: " + this.size + "px; " +
                     "border-radius: " + this.size + "px; ";
-                console.log(res);
                 return res;
             }
         },
