@@ -290,7 +290,10 @@
                     size: Number, //radar size in px
                 },
                 radarSize: Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight),
-                controlSize: Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight),
+                controlSize: {
+                    w: document.documentElement.clientWidth === Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) ? document.documentElement.clientWidth : (document.documentElement.clientWidth - Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight)),
+                    h: document.documentElement.clientHeight === Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) ? document.documentElement.clientHeight : (document.documentElement.clientHeight - Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight)),
+                },
             }
         },
         created() {
@@ -304,15 +307,14 @@
                 console.log(e);
                 this.radarSize = this.getRadarSize();
                 this.controlSize = this.getControlSize();
-
             },
-            getRadarSize(){
+            getRadarSize() {
                 return Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight);
             },
-            getControlSize(){
+            getControlSize() {
                 const dw = document.documentElement.clientWidth;
                 const dh = document.documentElement.clientHeight;
-                return{
+                return {
                     w: dw === this.radarSize ? dw : (dw - this.getRadarSize()),
                     h: dh === this.radarSize ? dh : (dh - this.getRadarSize()),
                 }
@@ -347,8 +349,8 @@
         flex-direction: row;
     }
 
-    @media (max-width: 480px){
-        .container{
+    @media (max-width: 480px) {
+        .container {
             flex-direction: column;
         }
     }
