@@ -7,7 +7,6 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import lsd.wheel.game.Direction
 import lsd.wheel.game.GameManager
 import lsd.wheel.service.data.User
 
@@ -83,8 +82,9 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
 
             get("/get-field") {
                 val user = call.principal<User>()!!
-                val game = gameManager.getGameByUser(user)
-                val field = game?.getKnownSubfield(user)
+                val game = gameManager.getGameByUsername(user.login)
+                val player = game.usernameToPlayer[user.login]!!
+                val field = game?.getKnownSubfield(player)
                 call.respond(field!!)
             }
         }
