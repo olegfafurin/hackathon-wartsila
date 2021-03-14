@@ -3,7 +3,6 @@ package lsd.wheel.routing
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.application.*
 import io.ktor.auth.*
-import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*

@@ -76,7 +76,6 @@ fun Application.module(testing: Boolean = false) {
     routing {
         static("/") {
             staticRootFolder = File("dist")
-            files(".")
             default("index.html")
             static("css") { files("css") }
             static("img") { files("img") }
