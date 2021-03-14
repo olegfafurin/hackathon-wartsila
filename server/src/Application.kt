@@ -73,15 +73,18 @@ fun Application.module(testing: Boolean = false) {
     })
 
     routing {
-        get("/") {
-            call.respond("Ok")
+        static("/game") {
+            staticRootFolder = File("dist")
+            files(".")
+            default("index.html")
+            static("css") { files("css") }
+            static("img") { files("img") }
+            static("js") { files("js") }
         }
 
-        static("assets") {
+        static("/assets") {
             staticRootFolder = File("assets")
-            static("images") {
-                files("images")
-            }
+            static("images") { files("images") }
         }
 
         (UserRouting("user").install)()
