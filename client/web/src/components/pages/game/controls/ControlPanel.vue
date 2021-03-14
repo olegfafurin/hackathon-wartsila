@@ -2,13 +2,16 @@
   <div class='all'>
     <router-view></router-view>
     <div class="control-container" :style="containerStyle">
+        <div class="top-controls">
+            <img src="http://localhost:8080/images/cabin.png" alt="Фон" class="background-img"/>
+        </div>
         <div class="bottom-controls" :style="bottomStyle">
-            <img src="@/assets/images/panel-background.png" alt="Фон" class="background-img"/>
+            <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон" class="background-img"/>
             <ButtonsBlock :matrix="move"/>
             <ButtonsBlock :matrix="fire"/>
             <Timer current="12" total="72"/>
         </div>
-<!--        <img src="http://localhost:8080/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
+<!--        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
     </div>
   </div>
 </template>

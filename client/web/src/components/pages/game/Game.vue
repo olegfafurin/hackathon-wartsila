@@ -26,115 +26,140 @@
                         pathPoints: [
                             {
                                 x: 1,
-                                y: 6
+                                y: 6,
+                                active:true,
                             },
                             {
                                 x: 0,
-                                y: 7
+                                y: 7,
+                                active:true,
                             },
                             {
                                 x: 0,
-                                y: 8
+                                y: 8,
+                                active:true,
                             },
                             {
                                 x: 1,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 2,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 3,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 4,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 5,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 6,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 7,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 8,
-                                y: 9
+                                y: 9,
+                                active:true,
                             },
                             {
                                 x: 9,
-                                y: 8
+                                y: 8,
+                                active:true,
                             },
                             {
                                 x: 10,
-                                y: 7
+                                y: 7,
+                                active:true,
                             },
                             {
                                 x: 10,
-                                y: 6
+                                y: 6,
+                                active:true,
                             },
                             {
                                 x: 10,
+                                y: 5,
+                                active:true,
+                            },
+                            {
+                                x: 10,
+                                y: 4,
+                                active:true,
+                            },
+                            {
+                                x: 9,
+                                y: 3,
+                                active:true,
+                            },
+                            {
+                                x: 2,
+                                y: 7,
+                                active:true,
+                            },
+                            {
+                                x: 3,
+                                y: 8,
+                                active:true,
+                            },
+                            {
+                                x: 4,
+                                y: 8,
+                                active:true,
+                            },
+                            {
+                                x: 5,
+                                y: 7,
+                                active:true,
+                            },
+                            {
+                                x: 3,
+                                y: 6,
+                                active:true,
+                            },
+                            {
+                                x: 4,
+                                y: 6,
+                                active:true,
+                            },
+                            {
+                                x: 2,
+                                y: 5,
+                                active:true,
+                            },
+                            {
+                                x: 2,
+                                y: 4,
+                                active:true,
+                            },
+                            {
+                                x: 5,
                                 y: 5
                             },
                             {
-                                x: 10,
+                                x: 5,
                                 y: 4
                             },
                             {
-                                x: 9,
+                                x: 3,
                                 y: 3
-                            },
-                            {
-                                x: 2,
-                                y: 7
-                            },
-                            {
-                                x: 3,
-                                y: 8
-                            },
-                            {
-                                x: 4,
-                                y: 8
-                            },
-                            {
-                                x: 5,
-                                y: 7
-                            },
-                            {
-                                x: 3,
-                                y: 6
-                            },
-                            {
-                                x: 4,
-                                y: 6
-                            },
-                            {
-                                x: 2,
-                                y: 5
-                            },
-                            {
-                                x: 2,
-                                y: 4
-                            },
-                            {
-                                x: 5,
-                                y: 5
-                            },
-                            {
-                                x: 5,
-                                y: 4
-                            },
-                            {
-                                x: 3,
-                                y: 4
                             },
                             {
                                 x: 4,
@@ -300,7 +325,13 @@
         },
         created() {
             window.addEventListener("resize", this.myEventHandler);
-            // setInterval(this.getField, 1000);
+            api($axios).createRoom().then(r => {
+                console.log(r.data);
+                setInterval(this.getField, 10000);
+            }).catch(e => {
+                console.log(e)
+            })
+
         },
         destroyed() {
             window.removeEventListener("resize", this.myEventHandler);
