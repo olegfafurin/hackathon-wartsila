@@ -98,8 +98,10 @@ class Game(
         val currentVertex = getCurrentVertex(player)
         knownVertices.getValue(player).add(currentVertex.id)
         for (edge in getEdges(currentVertex)) {
-            knownEdges.getValue(player).add(edge.id)
-            knownVertices.getValue(player).add(edge.vertex1 + edge.vertex2 - currentVertex.id)
+            if (!edge.blocked) {
+                knownEdges.getValue(player).add(edge.id)
+                knownVertices.getValue(player).add(edge.vertex1 + edge.vertex2 - currentVertex.id)
+            }
         }
     }
 
