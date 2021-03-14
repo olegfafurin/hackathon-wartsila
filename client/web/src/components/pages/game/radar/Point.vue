@@ -13,6 +13,7 @@
                 x: Number,
                 y: Number,
             },
+            size: Number,
             description: Object,
         },
         computed: {
@@ -20,7 +21,14 @@
                 return "point" + (this.active ? " point-active" : "") + (this.current ? " point-current" : "")
             },
             stylePosition() {
-                return "top:" + this.position.x + "px; left:" + this.position.y + ";"
+                console.log(this.size);
+                console.log(this.position.x);
+                const res = "left:" + (this.position.x - this.size / 2) + "px; top:" + (this.position.y - this.size / 2) + "px; " +
+                    "width: " + this.size + "px; " +
+                    "height: " + this.size + "px; " +
+                    (!this.current ? ("border-radius: " + this.size + "px; ") : "");
+                console.log(res);
+                return res;
             }
         },
         mounted() {
@@ -33,15 +41,17 @@
     .point {
         position: absolute;
         background-color: #42b983;
-        border-radius: 1em;
-        width: 1em;
-        height: 1em;
+
     }
+
     .point-active {
         background-color: aqua;
     }
+
     .point-current {
-        background-color: azure;
+        background: none;
     }
+
+
 
 </style>
