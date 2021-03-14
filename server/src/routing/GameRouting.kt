@@ -81,7 +81,7 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
 
             }
 
-            get("/find-room") {
+            get("/get-field") {
                 val user = call.principal<User>()!!
                 val game = gameManager.getGameByUser(user)
                 val field = game?.getKnownSubfield(user)
