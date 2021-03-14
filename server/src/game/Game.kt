@@ -118,9 +118,11 @@ class Game(
 
     fun removePlayer(player: Player) {
         val index = players.indexOfFirst { it.username == player.username }
-        players.removeAt(index)
-        if (index < currentPlayer) {
-            currentPlayer--
+        if (index > -1) {
+            players.removeAt(index)
+            if (index < currentPlayer) {
+                currentPlayer--
+            }
         }
     }
 }
