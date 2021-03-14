@@ -1,6 +1,7 @@
 <template>
     <div>
-        <MyTextField :value='roomId'/>
+        <MyTextField :onchange="onChange"/>
+        <MyTextField :onchange="onChangeLevel"/>
         <div class="button-group">
             <my-button :size="180" :onclick='createRoom' :text="'Создать игру'"></my-button>
             <my-button :size="180" :onclick='joinRoom' :text="'Присоединиться'"></my-button>
@@ -22,7 +23,8 @@
         },
         data() {
             return {
-                roomId: ''
+                roomId: '',
+                levelId: 9,
             }
         },
         computed: {
@@ -32,8 +34,9 @@
         },
         methods: {
             createRoom() {
-                api($axios).createRoom(this.roomId).then(r => {
-                    console.log(r.data)
+                console.log(this.roomId);
+                api($axios).createRoom({roomName: this.roomId, levelId: this.levelId}).then(r => {
+                    console.log(r.data);
                     console.log('комната создалась');
                     this.onConnect();
 
@@ -51,6 +54,12 @@
                     console.log(e);
                     console.log('не присоединился')
                 })
+            },
+            onChange(ev) {
+                this.roomId = ev.target.value;
+            },
+            onChangeLevel(ev) {
+                this.levelId = ev.target.value;
             }
         }
     }

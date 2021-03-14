@@ -58,6 +58,7 @@
                 items: Object,
             },
             size: Number, //radar size in px
+            playerData: Object
         },
         methods: {
             calcPosition(pos) {
@@ -98,12 +99,15 @@
             points() {
                 return this.map.vertexes.map((p) => {
                     let hasEnemy = false;
-                    for (let v in this.playerData.enemies) {
-                        if (p.id === this.playerData.enemies[v].id) {
-                            hasEnemy = true;
-                            break;
+                    if (this.playerData) {
+                        for (let v in this.playerData.enemies) {
+                            if (p.id === this.playerData.enemies[v].id) {
+                                hasEnemy = true;
+                                break;
+                            }
                         }
                     }
+
                     return {
                         current: p.id === this.map.logic.current.id,
                         active: false,
@@ -133,6 +137,7 @@
         -moz-transition: all 0.3s ease;;
         -o-transition: all 0.3s ease;;
         transition: all 0.3s ease;
+        overflow: hidden;
     }
 
     .path-point {
@@ -162,10 +167,10 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: -110;
+        z-index: 10;
         width: 100%;
         height: 100%;
-        background: radial-gradient(#00000000 0%, #00000000 40%, #2c3e50 60%);
+        background: radial-gradient(#00000000 0%, #00000000 40%, #2c3e50 80%, #2c3e50 100%);
     }
 
     .high {

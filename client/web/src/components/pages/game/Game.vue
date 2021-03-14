@@ -55,6 +55,7 @@
                     missiles: 0,
                     mines: 0,
                     hp: 3,
+                    enemies: 3,
                     status: 'WAITING',
                 }
             }
@@ -67,6 +68,14 @@
         },
         methods: {
             getField() {
+                console.log("getting Field");
+                this.playerData = {
+                        missiles: 0,
+                        mines: 0,
+                        hp: 3,
+                        enemies: 3,
+                        status: 'OK',
+                },
                 api($axios).getField().then(r => {
                     console.log(r.data.field);
 
