@@ -17,11 +17,20 @@ export const userStore = {
     actions: {
         login(context, formData) {
             return api($axios).login(formData.login, formData.password).then(r => {
-                localStorage.setItem('accessToken', r.accessToken)
-                context.commit('login', r.login)
+                const data = r.data
+                localStorage.setItem('accessToken', data.accessToken)
+                context.commit('login', data.login)
+                return data
             }).catch(e => {
                 console.log(e)
+            })
+        },
+        logout(context) {
+            return api($axios).logout().then(() => {
+                localStorage.removeItem('accessToken')
                 context.commit('logout')
+            }).catch(e => {
+                console.log(e)
             })
         }
     }

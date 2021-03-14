@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const $axios = axios.create({
-    baseURL: 'http://ferriswheel.ru:8080/',
+    baseURL: 'http://ferrisgame.ru:8080/',
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
