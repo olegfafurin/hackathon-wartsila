@@ -2,7 +2,6 @@
     <div id="app">
         <Game msg="Welcome to Your Vue.js App"/>
         <router-view></router-view>
-
     </div>
 </template>
 
@@ -18,6 +17,11 @@
 </script>
 
 <style>
+    @font-face {
+      font-family: Maler;
+      src: local('Maler'), url('./fonts/Maler.ttf') format('truetype');
+    }
+
     #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
