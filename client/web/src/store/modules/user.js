@@ -16,7 +16,7 @@ export const userStore = {
     },
     actions: {
         login(context, formData) {
-            api($axios).login(formData.login, formData.password).then(r => {
+            return api($axios).login(formData.login, formData.password).then(r => {
                 localStorage.setItem('accessToken', r.accessToken)
                 context.commit('login', r.login)
             }).catch(e => {
