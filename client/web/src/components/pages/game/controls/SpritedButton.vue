@@ -13,18 +13,15 @@
         },
         computed: {
             fullPath() {
-                console.log("http://localhost:8080/" + this.btnName + ".png");
-                return "http://localhost:8080//" + this.btnName + ".png";
+                return "http://ferrisgame.ru:8080/assets/images/" + this.btnName + ".png";
             }
         }
     }
 </script>
 
 <style scoped>
-    .custom-button {
+    .button-sprite {
         width: 100%;
-        height: 100%;
-        border: solid black 2px;
     }
 
     .empty-button {

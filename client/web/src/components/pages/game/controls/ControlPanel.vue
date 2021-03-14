@@ -1,13 +1,14 @@
 <template>
     <div class="control-container" :style="containerStyle">
         <div class="bottom-controls">
+            <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон" class="background-img"  :style="containerStyle"/>
             <Timer/>
             <div class="button-blocks">
                 <ButtonsBlock :matrix="move"/>
                 <ButtonsBlock :matrix="fire"/>
             </div>
         </div>
-        <img src="@/assets/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>
+        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>
     </div>
 </template>
 
