@@ -105,6 +105,15 @@ class Game(
         }
     }
 
+    fun neighboringPlayers(player: Player): List<Vertex> {
+        val vertex = getCurrentVertex(player)
+        val neighbors = vertex.edges.filterValues { !field.edges[it].blocked }.values.map {
+            val edge = field.edges[it]
+            edge.vertex1 + edge.vertex2 - vertex.id
+        }
+        return players.filter { it.vertexNo in neighbors }.map { field.vertices[it.vertexNo] }
+    }
+
     fun makeMove(player: Player, direction: Direction): Boolean {
         val outgoingEdge = field.edges[field.vertices[player.vertexNo].edges[direction] ?: return false]
         if (outgoingEdge.blocked) {

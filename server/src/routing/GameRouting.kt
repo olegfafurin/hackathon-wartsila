@@ -75,7 +75,8 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                             "playerItems" to mapOf(
                                 "mines" to player.items.count { it is MineItem },
                                 "missiles" to player.items.count { it is Missile }
-                            )
+                            ),
+                            "neighbors" to game.neighboringPlayers(player)
                         )
                     )
                 }
