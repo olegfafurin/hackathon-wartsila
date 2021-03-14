@@ -17,9 +17,31 @@ class Game(
         val username: String,
         var vertexNo: Int,
         var direction: Direction,
+        var health: Int = 3,
         var balance: Int = 0,
         val items: MutableList<Item> = mutableListOf()
-    )
+    ) {
+
+        fun fire(): Boolean {
+            var vertex = vertexNo
+            var dir = direction
+            while (true) {
+                val outgoingEdge = field.edges[field.vertices[vertex].edges[dir]!!]
+                if (outgoingEdge.blocked) {
+                    return false
+                }
+                vertex = outgoingEdge.vertex1 + outgoingEdge.vertex2 - vertex
+                dir = field.vertices[vertex].edges.filterValues { it == outgoingEdge.id }.keys.first()
+                val target = players.firstOrNull { it.vertexNo == vertex } ?: continue
+                target.health -= 1
+                if (target.health == 0) {
+                    // TODO kill player
+                }
+                return true
+            }
+        }
+
+    }
 
     fun addPlayer(username: String) {
         val newPlayer = Player(username, Random(System.nanoTime()).nextInt(field.vertices.size), Direction.NORTH)

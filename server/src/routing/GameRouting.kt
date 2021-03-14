@@ -87,6 +87,13 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         call.respond(mapOf("status" to "ERROR"))
                         return@post
                     }
+                    val player = game.usernameToPlayer[user.login]!!
+                    call.respond(
+                        mapOf(
+                            "status" to "OK",
+                            "success" to player.fire()
+                        )
+                    )
                 }
             }
         }
