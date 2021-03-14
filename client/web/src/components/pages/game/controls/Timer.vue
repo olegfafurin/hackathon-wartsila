@@ -2,7 +2,7 @@
     <div class="timer-container">
         <div class="timer-anim-box">
             <div class="innerCircle" :style="timercolor"/>
-            <img src="http://localhost:8080/timer.png" alt="Часики-то тикают" class="timer-img">
+            <img src="http://ferrisgame.ru:8080/assets/images/timer.png" alt="Часики-то тикают" class="timer-img">
             <div class="timer-text">{{total-current}} с</div>
         </div>
     </div>

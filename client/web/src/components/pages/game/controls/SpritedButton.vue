@@ -13,7 +13,7 @@
         },
         computed: {
             fullPath() {
-                return "http://localhost:8080/" + this.btnName + ".png";
+                return "http://ferrisgame.ru:8080/assets/images/" + this.btnName + ".png";
             }
         }
     }
