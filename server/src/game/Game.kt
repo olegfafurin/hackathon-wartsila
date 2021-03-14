@@ -41,9 +41,6 @@ class Game(
                 dir = field.vertices[vertex].edges.filterValues { it == outgoingEdge.id }.keys.first()
                 val target = players.firstOrNull { it.vertexNo == vertex } ?: continue
                 target.health -= 1
-                if (target.health == 0) {
-                    // TODO kill player
-                }
                 return true
             }
         }
@@ -100,6 +97,9 @@ class Game(
             field.vertices[newVertexNo].edges.filterValues { it == outgoingEdge.id }.keys.first() // the only edge equals to current
         player.direction = incomingDirection.rotate(2)
         updateKnownVertices(player)
+        val items = field.vertices[newVertexNo].items
+        field.vertices[newVertexNo].items = mutableListOf()
+        player.items.addAll(items)
         return true
     }
 
