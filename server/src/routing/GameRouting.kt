@@ -22,13 +22,18 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
     private val gameManager = GameManager
     private val objectMapper = ObjectMapper()
 
+    data class RoomPayload(
+        val roomName: String,
+        val levelId: Int
+    )
+
     override val install: Route.() -> Unit = {
         route("/$endpoint") {
             authenticate {
                 post("/create-room") {
                     val user = call.principal<User>()!!
-                    val roomName = context.receive<String>()
-                    val gameCreated = gameManager.createGame(user.login, roomName)
+                    val roomPayload = context.receive<RoomPayload>()
+                    val gameCreated = gameManager.createGame(user.login, roomPayload.roomName, roomPayload.levelId)
                     call.respond(
                         mapOf(
                             "status" to if (gameCreated) "OK" else "ERROR",

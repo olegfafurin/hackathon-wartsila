@@ -14,6 +14,9 @@
                     <SpritedButton btn-name="mine" :onclick="mine"/>
                     <div class="amount-indicator">{{playerData.mines}}</div>
                 </div>
+                <div class='money'>
+                    Score: {{playerData.money}}
+                </div>
                 <div class="hp-indicator">
                     <img :src="'http://ferrisgame.ru:8080/assets/images/hp'+playerData.hp +'.png'" :alt="playerData.hp"/>
                 </div>
