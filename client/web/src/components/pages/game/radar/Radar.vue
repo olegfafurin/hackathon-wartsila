@@ -2,7 +2,8 @@
     <div class="radar-container" :style="compStyle">
         <img src="http://ferrisgame.ru:8080/assets/images/radar.png" alt="Фон радара" :style="compStyle"
              class="radar-sprite"/>
-        <img v-if="!inGame" src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
+        <img v-if="!inGame" src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара"
+             :style="compStyle"
              class="radar-sprite"/>
         <div class="connect-container">
             <Connect v-if="!inGame" :on-connect="onConnect"/>
@@ -16,14 +17,16 @@
                :current="p.current"
                :active="p.active"
                :position="p.position"
-               :size="gridSize">
+               :size="gridSize"
+               :enemy="p.enemy">
         </Point>
         <img v-if="inGame" src='http://ferrisgame.ru:8080/assets/images/arrow.png'
              alt="игрок"
              :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize) + getRotation,2*gridSize)"
              class="player-icon"/>
         <div v-if="inGame" class="radar-shadow"/>
-        <img v-if="inGame" src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
+        <img v-if="inGame" src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара"
+             :style="compStyle"
              class="radar-sprite high"/>
 
     </div>
@@ -94,10 +97,18 @@
             },
             points() {
                 return this.map.vertexes.map((p) => {
+                    let hasEnemy = false;
+                    for (let v in this.playerData.enemies) {
+                        if (p.id === this.playerData.enemies[v].id) {
+                            hasEnemy = true;
+                            break;
+                        }
+                    }
                     return {
                         current: p.id === this.map.logic.current.id,
                         active: false,
-                        position: this.calcPosition(p)
+                        position: this.calcPosition(p),
+                        enemy: hasEnemy,
                     }
                 })
             },

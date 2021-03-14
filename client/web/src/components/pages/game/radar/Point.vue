@@ -1,6 +1,7 @@
 <template>
     <div :class="className" :style="stylePosition">
         <img src="http://ferrisgame.ru:8080/assets/images/point.png" alt="точка" style="width:100%; height:100%"/>
+        <div class="enemy-detector"></div>
     </div>
 </template>
 
@@ -16,10 +17,11 @@
             },
             size: Number,
             description: Object,
+            enemy: Boolean
         },
         computed: {
             className() {
-                return "point" + (this.active ? " point-active" : "") + (this.current ? " point-current" : "")
+                return "point" + (this.active ? " point-active" : "") + (this.current ? " point-current" : "") + (this.enemy ? " point-enemy" : "")
             },
             stylePosition() {
                 const res = "left:" + (this.position.x - this.size / 2) + "px; top:" + (this.position.y - this.size / 2) + "px; " +
@@ -48,6 +50,10 @@
 
     .point-active {
         background-color: aqua;
+    }
+
+    .point-enemy{
+        background-color: purple;
     }
 
 
