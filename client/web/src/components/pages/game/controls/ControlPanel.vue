@@ -139,5 +139,6 @@
         height: 100%;
         display: flex;
         flex-direction: column-reverse;
+        padding-right: 20px;
     }
 </style>
