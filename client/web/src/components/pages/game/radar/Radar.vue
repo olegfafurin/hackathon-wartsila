@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import Point from "@/components/pages/game/controls/radar/Point";
+    import Point from "@/components/pages/game/radar/Point";
 
     export default {
         name: "Radar",

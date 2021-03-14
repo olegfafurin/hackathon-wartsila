@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import Radar from "@/components/pages/game/controls/radar/Radar";
+    import Radar from "@/components/pages/game/radar/Radar";
     import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
 
     export default {
