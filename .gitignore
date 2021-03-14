@@ -2,9 +2,9 @@
 
 */.idea
 */.gradle/
-*/gradle/
 */node_modules/
 
 *.jar
+!gradle-wrapper.jar
 *.iml
 

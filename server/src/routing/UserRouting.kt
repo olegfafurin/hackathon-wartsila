@@ -40,6 +40,12 @@ class UserRouting(endpoint: String) : Routing(endpoint) {
                     TODO("need to remove user from all sessions")
                 }
             }
+
+            post("/register") {
+                val userData = context.receive<UserForm>()
+                if (UserService.createUser(userData.login, userData.password)) call.respond("ОК")
+                else call.respond("User already exists")
+            }
         }
     }
 

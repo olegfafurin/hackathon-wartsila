@@ -14,7 +14,7 @@ object UserTable : IntIdTable() {
 class UserEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<UserEntity>(UserTable)
 
-    val login by UserTable.login
-    val passwordHash by UserTable.passwordHash
-    val rating by UserTable.rating
+    var login by UserTable.login
+    var passwordHash by UserTable.passwordHash
+    var rating by UserTable.rating
 }
