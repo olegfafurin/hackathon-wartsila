@@ -2,23 +2,28 @@
     <div class="radar-container" :style="compStyle">
         <img src="http://ferrisgame.ru:8080/assets/images/radar.png" alt="Фон радара" :style="compStyle"
              class="radar-sprite"/>
-        <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
+        <img v-if="!inGame" src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
+             class="radar-sprite"/>
+        <div class="connect-container">
+            <Connect v-if="!inGame" :on-connect="onConnect"/>
+        </div>
+        <div v-for="p in (inGame ? map.pathPoints : [])" :key="p.x *100000 + p.y" class="path-point"
              :style="addShiftToStyle(p, ppSize, gridSize/smallifier) + (p.active ? 'background: radial-gradient(lightgreen 0%, #lightgreen 30%, #FFFFFF00 60%);' : '')">
             <img src="http://ferrisgame.ru:8080/assets/images/point.png" alt="точка" style="width:100%; height:100%"/>
         </div>
-        <Point v-for='p in points'
+        <Point v-for='p in (inGame ? points: [])'
                :key='p.id'
                :current="p.current"
                :active="p.active"
                :position="p.position"
                :size="gridSize">
         </Point>
-        <img src='http://ferrisgame.ru:8080/assets/images/arrow.png'
+        <img v-if="inGame" src='http://ferrisgame.ru:8080/assets/images/arrow.png'
              alt="игрок"
              :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize) + getRotation,2*gridSize)"
              class="player-icon"/>
-        <div class="radar-shadow"/>
-        <img src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
+        <div v-if="inGame" class="radar-shadow"/>
+        <img v-if="inGame" src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
              class="radar-sprite high"/>
 
     </div>
@@ -26,11 +31,13 @@
 
 <script>
     import Point from "@/components/pages/game/radar/Point";
+    import Connect from "@/components/pages/auth/Connect";
 
     export default {
         name: "Radar",
-        components: {Point},
+        components: {Connect, Point},
         props: {
+            onConnect: Function,
             inGame: Boolean,
             angle_speed: Number,
             range: Number,
@@ -65,15 +72,15 @@
             }
         },
         computed: {
-            getRotation(){
+            getRotation() {
                 console.log(this.map.logic.dir);
                 if (this.map.logic.dir === "N")
-                    return  "transform: rotate(0deg);";
-                else  if (this.map.logic.dir === "E")
-                    return  "transform: rotate(90deg);";
-                else  if (this.map.logic.dir === "S")
-                    return  "transform: rotate(180deg);";
-                return  "transform: rotate(-90deg);";
+                    return "transform: rotate(0deg);";
+                else if (this.map.logic.dir === "E")
+                    return "transform: rotate(90deg);";
+                else if (this.map.logic.dir === "S")
+                    return "transform: rotate(180deg);";
+                return "transform: rotate(-90deg);";
 
             },
             gridSize() {
@@ -152,5 +159,9 @@
 
     .high {
         z-index: 300;
+    }
+
+    .connect-container {
+        margin: 20%;
     }
 </style>

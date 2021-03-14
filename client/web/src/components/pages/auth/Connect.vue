@@ -1,10 +1,10 @@
 <template>
     <div>
-        <label>
-            <input type='text' name='roomId' :value='roomId'>
-        </label>
-        <my-button :size="150" v-if='emptyId' :onclick='createRoom'>Создать игру</my-button>
-        <my-button :size="150" v-else :onclick='joinRoom'>Присоединиться</my-button>
+        <MyTextField :value='roomId'/>
+        <div class="button-group">
+            <my-button :size="180" :onclick='createRoom' :text="'Создать игру'"></my-button>
+            <my-button :size="180" :onclick='joinRoom' :text="'Присоединиться'"></my-button>
+        </div>
     </div>
 </template>
 
@@ -12,10 +12,14 @@
     import api from '@/axios/api'
     import $axios from '@/axios/instance'
     import MyButton from "@/components/pages/auth/MyButton";
+    import MyTextField from "@/components/pages/auth/MyTextField";
 
     export default {
         name: 'Connect',
-        components: {MyButton},
+        components: {MyTextField, MyButton},
+        props: {
+            onConnect: Function
+        },
         data() {
             return {
                 roomId: ''
@@ -31,20 +35,21 @@
                 this.roomID = Math.random().toString();
                 api($axios).createRoom(this.roomId).then(r => {
                     console.log(r.data)
-                    console.log('комната создалась')
-                    setInterval(this.getField, 1000)
+                    console.log('комната создалась');
+                    this.onConnect();
+
                 }).catch(e => {
-                    console.log(e)
+                    console.log(e);
                     console.log('комната не создалась')
                 })
             },
             joinRoom() {
                 api($axios).joinRoom(this.roomId).then(r => {
-                    console.log(r.data)
-                    console.log('присоединился')
-                    setInterval(this.getField, 1000)
+                    console.log(r.data);
+                    console.log('присоединился');
+                    this.onConnect();
                 }).catch(e => {
-                    console.log(e)
+                    console.log(e);
                     console.log('не присоединился')
                 })
             }
@@ -53,5 +58,11 @@
 </script>
 
 <style scoped>
+.button-group{
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
+}
 </style>

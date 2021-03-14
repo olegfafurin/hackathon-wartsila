@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Radar :size="radarSize" :map="radarData.map" :in-game="false"></Radar>
+        <Radar :size="radarSize" :map="radarData.map" :in-game="inGame" :on-connect="getField"></Radar>
         <ControlPanel :size="controlSize" :playerData="playerData"/>
     </div>
 </template>
@@ -55,7 +55,7 @@
                     missiles: 0,
                     mines: 0,
                     hp: 3,
-                    status,
+                    status: 'WAITING',
                 }
             }
         },
@@ -71,7 +71,7 @@
                     console.log(r.data.field);
 
 
-                    if(r.data.status === "GAME_OVER"){
+                    if (r.data.status === "GAME_OVER") {
                         alert("GAME OVER");
                         this.playerData = {
                             missiles: 0,
@@ -136,6 +136,17 @@
                     w: dw === this.radarSize ? dw : (dw - this.getRadarSize()),
                     h: dh === this.radarSize ? dh : (dh - this.getRadarSize()),
                 }
+            }
+        },
+        computed: {
+            inGame() {
+                console.log("status", this.playerData.status);
+                console.log("ERROR", this.playerData.status === 'ERROR');
+                console.log("GAME_OVER", this.playerData.status === 'GAME_OVER');
+                console.log("WAITING", this.playerData.status === 'WAITING');
+                console.log("curr stutus", this.playerData.status === 'ERROR' || this.playerData.status === 'GAME_OVER' || this.playerData.status === 'WAITING');
+                console.log("and", this.playerData.status && !(this.playerData.status === 'ERROR' || this.playerData.status === 'GAME_OVER' || this.playerData.status === 'WAITING'));
+                return this.playerData.status && !(this.playerData.status === 'ERROR' || this.playerData.status === 'GAME_OVER' || this.playerData.status === 'WAITING');
             }
         }
 
