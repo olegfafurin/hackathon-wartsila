@@ -32,7 +32,6 @@
         },
         methods: {
             createRoom() {
-                this.roomID = Math.random().toString();
                 api($axios).createRoom(this.roomId).then(r => {
                     console.log(r.data)
                     console.log('комната создалась');
