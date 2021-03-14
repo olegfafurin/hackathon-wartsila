@@ -1,14 +1,14 @@
 <template>
     <div class="control-container" :style="containerStyle">
-        <div class="bottom-controls">
-            <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон" class="background-img"  :style="containerStyle"/>
+        <div class="bottom-controls" :style="bottomStyle">
+            <img src="@/assets/images/panel-background.png" alt="Фон" class="background-img"/>
             <Timer/>
             <div class="button-blocks">
                 <ButtonsBlock :matrix="move"/>
                 <ButtonsBlock :matrix="fire"/>
             </div>
         </div>
-        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>
+<!--        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
     </div>
 </template>
 
@@ -44,6 +44,9 @@
         computed: {
             containerStyle() {
                 return "height:" + this.size.h + "px; width:" + this.size.w + "px;"
+            },
+            bottomStyle() {
+                return "height:" + this.size.w /3 + "px; width:" + this.size.w + "px; padding: " + this.size.w/15 + "px;"
             }
         }
     }
@@ -57,6 +60,12 @@
     }
 
 
+    .subbackground-img {
+        height: 100%;
+        width: 100%;
+        z-index: -500;
+    }
+
     .background-img {
         height: 100%;
         width: 100%;
@@ -67,6 +76,8 @@
     }
 
     .bottom-controls {
+        box-sizing: border-box;
+        position: relative;
         display: flex;
         flex-direction: row-reverse;
         align-content: flex-end;
