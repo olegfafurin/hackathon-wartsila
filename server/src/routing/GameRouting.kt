@@ -25,9 +25,12 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
             post("/create-room") {
                 val user = call.principal<User>()!!
                 val roomName = context.receive<String>()
-                gameManager.createGame(user, roomName)
-                val field = gameManager.getGameByUser(user)?.getKnownSubfield(user)!!
-                call.respond(field)
+                val gameCreated = gameManager.createGame(user, roomName)
+                call.respond(
+                    mapOf(
+                        "status" to if (gameCreated) "OK" else "ERROR",
+                    )
+                )
             }
 
             post("/find-room") {
