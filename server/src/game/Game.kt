@@ -1,5 +1,6 @@
 package lsd.wheel.game
 
+import lsd.wheel.game.Direction.Companion.by
 import lsd.wheel.game.Direction.Companion.rotate
 import lsd.wheel.service.data.User
 import lsd.wheel.service.data.game.*
@@ -51,6 +52,7 @@ class Game(
                 }
                 vertex = outgoingEdge.vertex1 + outgoingEdge.vertex2 - vertex
                 dir = field.vertices[vertex].edges.filterValues { it == outgoingEdge.id }.keys.first()
+                dir = by((dir.id + 2) % 4)
                 val target = players.firstOrNull { it.vertexNo == vertex } ?: continue
                 target.health -= 1
                 return true
