@@ -2,7 +2,7 @@
   <div class='all'>
     <div class="control-container" :style="containerStyle">
         <div class="top-controls">
-            <img src="http://localhost:8080/images/cabin.png" alt="Фон" class="background-img"/>
+            <img src="http://ferrisgame.ru:8080/assets/images/cabin.png" alt="Фон" class="background-img"/>
         </div>
         <div class="bottom-controls" :style="bottomStyle">
             <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон" class="background-img"/>
