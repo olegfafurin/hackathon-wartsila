@@ -35,7 +35,7 @@ class Game(
     private val knownVertices: MutableMap<Player, MutableSet<Int>> = mutableMapOf()
     private val knownEdges: MutableMap<Player, MutableSet<Int>> = mutableMapOf()
 
-    fun getCurrentVertex(player: Player) = field.vertices[player.vertexNo]
+    private fun getCurrentVertex(player: Player) = field.vertices[player.vertexNo]
 
     private fun getEdges(vertex: Vertex): List<Edge> = vertex.edges.values.map { field.edges[it] }
 
@@ -73,6 +73,17 @@ class Game(
         player.direction = incomingDirection.rotate(2)
         updateKnownVertices(player)
         return true
+    }
+
+    fun setMine(player: Player): Boolean {
+        if (player.items.filterIsInstance<MineItem>().isNotEmpty()) {
+            val someMine = player.items.filterIsInstance<MineItem>().first()
+            val removeIndex = player.items.indexOf(someMine)
+            player.items.removeAt(removeIndex)
+            field.vertices[player.vertexNo].hasMine = true
+            return true
+        }
+        return false
     }
 
 }
