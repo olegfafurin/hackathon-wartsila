@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Radar :size="radarSize" :map="radarData.map"></Radar>
-        <ControlPanel/>
+        <ControlPanel :size="controlSize"/>
     </div>
 </template>
 
@@ -293,7 +293,15 @@
         },
         computed:{
             radarSize(){
-                return 100;
+                return Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight);
+            },
+            controlSize(){
+                const dw = document.documentElement.clientWidth;
+                const dh = document.documentElement.clientHeight;
+                return{
+                    w: dw === this.radarSize ? dw : (dw - this.radarSize),
+                    h: dh === this.radarSize ? dh : (dh - this.radarSize),
+                }
             }
         }
 
@@ -323,5 +331,11 @@
     .container {
         display: flex;
         flex-direction: row;
+    }
+
+    @media (max-width: 480px){
+        .container{
+            flex-direction: column;
+        }
     }
 </style>

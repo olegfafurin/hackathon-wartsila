@@ -13,9 +13,12 @@
 <style scoped>
     .timer-container{
         width: 25%;
+        display: flex;
+        flex-direction: column-reverse;
     }
     .timer-img{
         width: 100%;
+
     }
 
 </style>

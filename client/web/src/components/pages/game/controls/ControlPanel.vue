@@ -1,12 +1,13 @@
 <template>
-    <div class="control-container">
+    <div class="control-container" :style="containerStyle">
         <div class="bottom-controls">
             <Timer/>
-
-            <ButtonsBlock/>
-            <ButtonsBlock/>
+            <div class="button-blocks">
+                <ButtonsBlock/>
+                <ButtonsBlock/>
+            </div>
         </div>
-        <img src="@/assets/background.png" alt="Фон" class="background-img"/>
+        <img src="@/assets/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>
     </div>
 </template>
 
@@ -16,18 +17,28 @@
 
     export default {
         name: "ControlPanel",
-        components: {ButtonsBlock, Timer}
+        components: {ButtonsBlock, Timer},
+        props: {
+            size: {
+                w: Number,
+                h: Number,
+            }
+        },
+        computed: {
+            containerStyle() {
+                return "height:" + this.size.h + "px; width:" + this.size.w + "px;"
+            }
+        }
     }
 </script>
 
 <style scoped>
     .control-container {
         position: relative;
-        height: 100vh;
-        width: calc(100% - 100vh);
         display: flex;
         flex-direction: column-reverse;
     }
+
 
     .background-img {
         height: 100%;
@@ -43,5 +54,13 @@
         flex-direction: row-reverse;
         align-content: flex-end;
         width: 100%;
+        justify-content: space-between;
+
+    }
+
+    .button-blocks {
+        display: flex;
+        justify-content: space-around;
+
     }
 </style>

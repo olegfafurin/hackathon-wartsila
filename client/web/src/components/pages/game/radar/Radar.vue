@@ -40,7 +40,7 @@
                 },
                 items: Object,
             },
-            size: Number, //radar size in vh
+            size: Number, //radar size in px
         },
         methods: {
             calcPosition(pos) {
@@ -51,10 +51,10 @@
             },
             addShiftToStyle(pos, base_style, size) {
                 const p = this.calcPosition(pos);
-                return base_style + " border-radius:2rem; left:" + (p.x - size / 2) + "vh; top:" + (p.y - size / 2) + "vh;"
+                return base_style + " border-radius:2rem; left:" + (p.x - size / 2) + "px; top:" + (p.y - size / 2) + "px;"
             },
             getSizeStyle(s){
-                return "height:" + s + "vh; width:" + s + "vh; "
+                return "height:" + s + "px; width:" + s + "px; "
             }
         },
         computed: {
@@ -77,10 +77,10 @@
                 })
             },
             compStyle() {
-                return "height:" + this.size + "vh; width:" + this.size + "vh;"
+                return "height:" + this.size + "px; width:" + this.size + "px;"
             },
             ppSize() {
-                return "height:" + this.gridSize/this.smallifier + "vh; width:" + this.gridSize/this.smallifier + "vh; "
+                return "height:" + this.gridSize/this.smallifier + "px; width:" + this.gridSize/this.smallifier + "px; "
             },
             smallifier(){
                 console.log(this.map.pathPoints.length);
