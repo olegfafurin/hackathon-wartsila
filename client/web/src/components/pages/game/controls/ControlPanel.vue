@@ -16,11 +16,10 @@
 <script>
     import Timer from "@/components/pages/game/controls/Timer";
     import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
-    import Auth from '@/components/pages/auth/Auth'
 
     export default {
         name: "ControlPanel",
-        components: {ButtonsBlock, Timer, Auth, Rules},
+        components: {ButtonsBlock, Timer},
         props: {
             size: {
                 w: Number,

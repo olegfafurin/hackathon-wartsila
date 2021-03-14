@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Vue from 'vue'
 
 const $axios = axios.create({
     baseURL: 'http://ferrisgame.ru:8080/',
