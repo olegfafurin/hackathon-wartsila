@@ -9,9 +9,9 @@ object GameManager {
 
     private val usernameGame: MutableMap<String, Game> = mutableMapOf()
 
-    fun createGame(username: String, roomName: String): Boolean {
+    fun createGame(username: String, roomName: String, levelId: Int): Boolean {
         if (roomName in games.keys) return false
-        val newField = GameService.getFieldById(1) // TODO field generation
+        val newField = GameService.getFieldById(levelId) // TODO field generation
         val newGame = Game(newField, mutableListOf())
         games[roomName] = newGame
         addUserToGame(username, roomName)
