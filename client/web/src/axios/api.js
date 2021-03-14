@@ -16,8 +16,15 @@ export default function (axios) {
         joinRoom(roomId) {
             return axios.post('/game/find-room', {roomId})
         },
+
         getField() {
             return axios.get('/game/get-field')
+        },
+        move(direction) {
+            return axios.post('/game/move', direction)
+        },
+        fire(direction) {
+            return axios.post('/game/fire', direction)
         }
     }
 }
