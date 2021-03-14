@@ -53,8 +53,8 @@
 <style scoped>
     .button-container {
         display: grid;
-        grid-template-rows: 40% 40%; /* 3 строки */
-        grid-template-columns: 25% 25% 25%; /* 3 столбца */
+        grid-template-rows: 30% 30%; /* 3 строки */
+        grid-template-columns: 30% 30% 30%; /* 3 столбца */
         gap: 10px;
     }
 </style>

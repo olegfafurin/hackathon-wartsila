@@ -1,5 +1,5 @@
 <template>
-    <div :class="empty? 'empty-button':'custom-button'" @click="onclick">
+    <div :class="empty? 'empty-button':'custom-button'" @click="onclick" @>
         <img class="button-sprite" :src="fullPath" :alt="btnName"/>
     </div>
 </template>

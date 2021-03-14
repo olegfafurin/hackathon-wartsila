@@ -1,7 +1,7 @@
 <template>
     <div class='all'>
         <div class="control-container" :style="containerStyle">
-            <div class="top-controls">
+            <div class="top-controls" v-if="size.w/size.h <1.5 && size.w/size.h >0.67">
                 <img src="http://ferrisgame.ru:8080/assets/images/cabin.png" alt="Фон" class="background-img"/>
             </div>
             <div class="bottom-controls" :style="bottomStyle">
@@ -10,8 +10,11 @@
                 <ButtonsBlock :matrix="move"/>
                 <div class="fire-buttons">
                     <SpritedButton btn-name="missleF" :onclick="fire"/>
+                    <div class="amount-indicator">{{playerData.missiles}}</div>
                     <SpritedButton btn-name="mine" :onclick="mine"/>
+                    <div class="amount-indicator">{{playerData.mines}}</div>
                 </div>
+                <img :src="'http://ferrisgame.ru:8080/assets/images/hp'+playerData.hp +'.png'" :alt="playerData.hp"/>
                 <Timer current="12" total="72"/>
             </div>
             <!--        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
@@ -33,7 +36,8 @@
             size: {
                 w: Number,
                 h: Number,
-            }
+            },
+            playerData: Object
         },
         data() {
             return {
@@ -81,7 +85,9 @@
     }
     .fire-buttons{
         display: grid;
-        grid-template-rows: 40% 40%; /* 2 строки */
+        height: 100%;
+        grid-template-rows: 30% 30%; /* 2 строки */
+        grid-template-columns: 30% 30%; /* 2 строки */
         gap: 10px;
     }
 
@@ -105,17 +111,22 @@
         box-sizing: border-box;
         position: relative;
         display: grid;
-        grid-template-columns: 30% 30% 25%;
+        grid-template-columns: 30% 30% 10% 20%;
         flex-direction: row-reverse;
         align-content: flex-end;
         width: 100%;
         justify-content: space-between;
-
+        min-width: 300px;
     }
 
     .button-blocks {
         display: flex;
         justify-content: space-around;
 
+    }
+    .amount-indicator {
+        font-family: Maler, 'open-sans',serif;
+        color: white;
+        font-size: 2em;
     }
 </style>
