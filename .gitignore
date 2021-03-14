@@ -4,6 +4,9 @@
 */.gradle/
 */node_modules/
 
+server/dist/
+client/web/dist/
+
 *.jar
 !gradle-wrapper.jar
 *.iml
