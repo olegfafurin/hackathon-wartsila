@@ -10,11 +10,11 @@ export default function (axios) {
             return axios.post('/user/logout')
         },
 
-        createRoom() {
-            return axios.post('/game/create-room')
+        createRoom(roomId) {
+            return axios.post('/game/create-room', roomId)
         },
         joinRoom(roomId) {
-            return axios.post('/game/find-room', {roomId})
+            return axios.post('/game/find-room', roomId)
         },
 
         getField() {

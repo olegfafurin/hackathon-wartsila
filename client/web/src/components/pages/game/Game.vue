@@ -325,7 +325,7 @@
         },
         created() {
             window.addEventListener("resize", this.myEventHandler);
-            api($axios).createRoom().then(r => {
+            api($axios).createRoom("random").then(r => {
                 console.log(r.data);
                 console.log('комната создалась');
                 setInterval(this.getField, 10000);
