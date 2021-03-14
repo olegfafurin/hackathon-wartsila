@@ -16,6 +16,7 @@ import io.ktor.jackson.*
 import lsd.wheel.auth.JWTInstance
 import lsd.wheel.db.initDatabase
 import lsd.wheel.routing.UserRouting
+import lsd.wheel.service.GameService
 import lsd.wheel.service.UserService
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -66,7 +67,7 @@ fun Application.module(testing: Boolean = false) {
         jdbcUrl = "jdbc:postgresql://localhost:5432/game"
         driverClassName = "org.postgresql.Driver"
         username = "postgres"
-        password = "password"
+        password = "postgres"
         maximumPoolSize = 4
         transactionIsolation = "TRANSACTION_READ_COMMITTED"
     })
@@ -78,5 +79,7 @@ fun Application.module(testing: Boolean = false) {
 
         (UserRouting("user").install)()
     }
+
+    GameService.getFieldById(1)
 }
 

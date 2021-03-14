@@ -72,7 +72,8 @@ object GameService {
                     vertices[v1].edges[Direction.NORTH] = edgeId
                 vertexRowList[v1][VertexTable.edgeSouth] == edgeOldId ->
                     vertices[v1].edges[Direction.SOUTH] = edgeId
-
+            }
+            when {
                 vertexRowList[v2][VertexTable.edgeEast] == edgeOldId ->
                     vertices[v2].edges[Direction.EAST] = edgeId
                 vertexRowList[v2][VertexTable.edgeWest] == edgeOldId ->
