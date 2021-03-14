@@ -81,11 +81,7 @@ fun Application.module(testing: Boolean = false) {
             static("css") { files("css") }
             static("img") { files("img") }
             static("js") { files("js") }
-        }
-
-        static("/assets") {
-            staticRootFolder = File("assets")
-            static("/images") { files("images") }
+            static("assets/images") { files("../assets/images") }
         }
 
         (UserRouting("user").install)()
