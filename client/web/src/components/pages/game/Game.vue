@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Radar :size="radarSize" :map="radarData.map" :in-game="false"></Radar>
-        <ControlPanel :size="controlSize"/>
+        <ControlPanel :size="controlSize" :playerData="playerData"/>
     </div>
 </template>
 
@@ -21,8 +21,7 @@
             return {
                 radarData: {
                     map: {
-                        pathPoints: [
-                        ],
+                        pathPoints: [],
                         vertexes: [
                             {
                                 id: 0,
@@ -52,6 +51,12 @@
                     w: document.documentElement.clientWidth === Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) ? document.documentElement.clientWidth : (document.documentElement.clientWidth - Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight)),
                     h: document.documentElement.clientHeight === Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) ? document.documentElement.clientHeight : (document.documentElement.clientHeight - Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight)),
                 },
+                playerData: {
+                    missiles: 0,
+                    mines: 0,
+                    hp: 3,
+                    status,
+                }
             }
         },
         created() {
@@ -74,8 +79,8 @@
                 api($axios).getField().then(r => {
                     console.log(r.data.field);
                     let v = [];
-                    for(let e in r.data.field.edges){
-                        for(let p in r.data.field.edges[e].path){
+                    for (let e in r.data.field.edges) {
+                        for (let p in r.data.field.edges[e].path) {
                             v.push({
                                 x: r.data.field.edges[e].path[p].first,
                                 y: -r.data.field.edges[e].path[p].second
@@ -98,6 +103,13 @@
                             dir: r.data.currentDirection[0]
                         },
                     };
+
+                    this.playerData = {
+                        missiles: r.data.playerItems.missiles,
+                        mines: r.data.playerItems.mines,
+                        hp: r.data.playerHealth,
+                        status: r.data.status
+                    }
                     return r.data;
                 }).catch(e => {
                     console.log(e)
