@@ -2,7 +2,7 @@
   <div>
     <div v-if='loggedIn'>
       <div>Your login: {{ loggedLogin }}</div>
-      <button @click='doLogout'>Logout</button>
+      <button @click='doLogout'>Выйти</button>
     </div>
     <div v-else>
       <label>
@@ -11,9 +11,10 @@
       <label>
         <input type='text' name='password' v-model='password'>
       </label>
-
-      <button @click='doRegister'>Register</button>
-      <button @click='doLogin'>Login</button>
+      <div class="btn-group">
+        <MyButton @click='doRegister' :size="160" text="Регистрация"></MyButton>
+        <MyButton @click='doLogin' :size="160" text="Вход"></MyButton>
+      </div>
     </div>
   </div>
 </template>
@@ -21,9 +22,11 @@
 <script>
 import api from '@/axios/api'
 import $axios from '@/axios/instance'
+import MyButton from "@/components/pages/auth/MyButton";
 
 export default {
   name: 'Auth',
+  components: {MyButton},
   data() {
     return {
       login: '',
@@ -66,5 +69,9 @@ export default {
 </script>
 
 <style scoped>
+.btn-group{
+  display: flex;
+  flex-direction: row;
 
+}
 </style>

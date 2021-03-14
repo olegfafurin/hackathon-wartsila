@@ -42,7 +42,7 @@
     .point {
         position: absolute;
         background-color: #42b983;
-
+z-index: -200;
     }
 
     .point-active {
