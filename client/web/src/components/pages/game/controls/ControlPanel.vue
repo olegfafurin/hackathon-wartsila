@@ -14,7 +14,9 @@
                     <SpritedButton btn-name="mine" :onclick="mine"/>
                     <div class="amount-indicator">{{playerData.mines}}</div>
                 </div>
-                <img :src="'http://ferrisgame.ru:8080/assets/images/hp'+playerData.hp +'.png'" :alt="playerData.hp"/>
+                <div class="hp-indicator">
+                    <img :src="'http://ferrisgame.ru:8080/assets/images/hp'+playerData.hp +'.png'" :alt="playerData.hp"/>
+                </div>
                 <Timer current="12" total="72"/>
             </div>
             <!--        <img src="http://ferrisgame.ru:8080/assets/images/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
@@ -86,11 +88,15 @@
     .fire-buttons{
         display: grid;
         height: 100%;
-        grid-template-rows: 30% 30%; /* 2 строки */
-        grid-template-columns: 30% 30%; /* 2 строки */
+        grid-template-rows: 45% 45%; /* 2 строки */
+        grid-template-columns: 45% 45%; /* 2 строки */
         gap: 10px;
     }
 
+    .bottom-linked{
+        display: flex;
+        flex-direction: column-reverse;
+    }
 
     .subbackground-img {
         height: 100%;
@@ -111,7 +117,7 @@
         box-sizing: border-box;
         position: relative;
         display: grid;
-        grid-template-columns: 30% 30% 10% 20%;
+        grid-template-columns: 30% 20% 10% 20%;
         flex-direction: row-reverse;
         align-content: flex-end;
         width: 100%;
@@ -128,5 +134,9 @@
         font-family: Maler, 'open-sans',serif;
         color: white;
         font-size: 2em;
+    }
+    .hp-indicator{
+        height: 100%;
+        display: flex;
     }
 </style>
