@@ -14,7 +14,7 @@ export default function (axios) {
             return axios.post('/game/create-room')
         },
         joinRoom(roomId) {
-            return axios.post('/game/join-room', {roomId})
+            return axios.post('/game/find-room', {roomId})
         },
         getField() {
             return axios.get('/game/get-field')

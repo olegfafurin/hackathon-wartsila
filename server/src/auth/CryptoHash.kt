@@ -8,7 +8,7 @@ import javax.crypto.spec.PBEKeySpec
 object CryptoHash {
 
     private val hasher = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
-    private val salt = SecureRandom().generateSeed(16)
+    private val salt = "abcdefgh12345678".toByteArray()
     private val base64Encoder = Base64.getEncoder()
 
     fun encode(value: String): String {

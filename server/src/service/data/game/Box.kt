@@ -5,7 +5,4 @@ package lsd.wheel.service.data.game
  */
 
 class Box(override val itemId: Int, val value: Int) : Item {
-    fun open() {
-
-    }
 }
