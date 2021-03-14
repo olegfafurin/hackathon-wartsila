@@ -25,6 +25,7 @@ class Game(
         val newPlayer = Player(username, Random(System.nanoTime()).nextInt() % field.vertices.size + 1, Direction.NORTH)
         players.add(newPlayer)
         usernameToPlayer.putIfAbsent(username, newPlayer)
+        updateKnownVertices(newPlayer)
     }
 
     val usernameToPlayer: MutableMap<String, Player> = mutableMapOf()
