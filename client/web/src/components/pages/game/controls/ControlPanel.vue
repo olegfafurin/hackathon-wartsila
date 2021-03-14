@@ -8,7 +8,7 @@
                 <img src="http://ferrisgame.ru:8080/assets/images/panel-background.png" alt="Фон"
                      class="background-img"/>
                 <ButtonsBlock :matrix="move"/>
-                <div>
+                <div class="fire-buttons">
                     <SpritedButton btn-name="missleF" :onclick="fire"/>
                     <SpritedButton btn-name="mine" :onclick="mine"/>
                 </div>
@@ -24,10 +24,11 @@
     import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
     import api from "@/axios/api";
     import $axios from "@/axios/instance";
+    import SpritedButton from "@/components/pages/game/controls/SpritedButton";
 
     export default {
         name: "ControlPanel",
-        components: {ButtonsBlock, Timer},
+        components: {SpritedButton, ButtonsBlock, Timer},
         props: {
             size: {
                 w: Number,
@@ -77,6 +78,11 @@
         position: relative;
         display: flex;
         flex-direction: column-reverse;
+    }
+    .fire-buttons{
+        display: grid;
+        grid-template-rows: 40% 40%; /* 2 строки */
+        gap: 10px;
     }
 
 
