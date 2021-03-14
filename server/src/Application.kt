@@ -73,7 +73,7 @@ fun Application.module(testing: Boolean = false) {
     })
 
     routing {
-        static("/game") {
+        static("/") {
             staticRootFolder = File("dist")
             files(".")
             default("index.html")
@@ -84,7 +84,7 @@ fun Application.module(testing: Boolean = false) {
 
         static("/assets") {
             staticRootFolder = File("assets")
-            static("images") { files("images") }
+            static("/images") { files("images") }
         }
 
         (UserRouting("user").install)()
