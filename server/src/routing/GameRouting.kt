@@ -60,6 +60,10 @@ class GameRouting(endpoint: String) : Routing(endpoint) {
                         call.respond(mapOf("status" to "GAME_OVER"))
                         return@get
                     }
+                    if (!game.isCurrentPlayer(player)) {
+                        call.respond(mapOf("status" to "Not your turn"))
+                        return@get
+                    }
                     val knownField = game.getKnownSubfield(player)
                     call.respond(
                         mapOf(
