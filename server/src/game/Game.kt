@@ -2,10 +2,7 @@ package lsd.wheel.game
 
 import lsd.wheel.game.Direction.Companion.rotate
 import lsd.wheel.service.data.User
-import lsd.wheel.service.data.game.Edge
-import lsd.wheel.service.data.game.Field
-import lsd.wheel.service.data.game.Item
-import lsd.wheel.service.data.game.Vertex
+import lsd.wheel.service.data.game.*
 import kotlin.random.Random
 
 class Game(
