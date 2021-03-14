@@ -10,6 +10,12 @@ class Game(
     private val players: MutableList<Player>
 ) {
 
+    init {
+        field.vertices[0].items.add(Missile(1))
+        field.vertices[field.vertices.size / 2].items.add(MineItem(2))
+        field.vertices[field.vertices.size - 1].items.add(Missile(1))
+    }
+
     private var currentPlayer = 0
 
     fun isCurrentPlayer(player: Player): Boolean {
@@ -26,7 +32,7 @@ class Game(
         var direction: Direction,
         var balance: Int = 0,
         var health: Int = 3,
-        val items: MutableList<Item> = mutableListOf()
+        val items: MutableList<Item> = mutableListOf(Missile(1))
     ) {
 
         fun fire(): Boolean {
