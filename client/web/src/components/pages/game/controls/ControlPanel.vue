@@ -1,4 +1,6 @@
 <template>
+  <div class='all'>
+    <router-view></router-view>
     <div class="control-container" :style="containerStyle">
         <div class="bottom-controls" :style="bottomStyle">
             <img src="@/assets/images/panel-background.png" alt="Фон" class="background-img"/>
@@ -8,15 +10,17 @@
         </div>
 <!--        <img src="http://localhost:8080/background.png" alt="Фон" class="background-img"  :style="containerStyle"/>-->
     </div>
+  </div>
 </template>
 
 <script>
     import Timer from "@/components/pages/game/controls/Timer";
     import ButtonsBlock from "@/components/pages/game/controls/ButtonsBlock";
+    import Auth from '@/components/pages/auth/Auth'
 
     export default {
         name: "ControlPanel",
-        components: {ButtonsBlock, Timer},
+        components: {ButtonsBlock, Timer, Auth, Rules},
         props: {
             size: {
                 w: Number,

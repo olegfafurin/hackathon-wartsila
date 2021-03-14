@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Game msg="Welcome to Your Vue.js App"/>
-    <Auth></Auth>
   </div>
 </template>
 

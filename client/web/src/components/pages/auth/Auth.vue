@@ -43,12 +43,16 @@ export default {
       this.$store.dispatch(
           'user/login',
           {login: this.login, password: this.password}
-      )
+      ).then(() => {
+        this.$router.replace("/")
+      })
     },
     doLogout() {
       this.$store.dispatch(
           'user/logout'
-      )
+      ).then(() => {
+        this.$router.replace("/login")
+      })
     },
     doRegister() {
       api($axios).register(this.login, this.password).then(() => {
