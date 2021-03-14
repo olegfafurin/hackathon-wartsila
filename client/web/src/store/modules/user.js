@@ -31,6 +31,7 @@ export const userStore = {
                 context.commit('logout')
             }).catch(e => {
                 console.log(e)
+                context.commit('logout')
             })
         }
     }
