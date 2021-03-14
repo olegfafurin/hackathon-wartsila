@@ -1,8 +1,11 @@
 <template>
     <div class="radar-container" :style="compStyle">
-        <img src="http://localhost:8080/radar.png" alt="Фон радара" :style="compStyle" class="radar-sprite"/>
+        <img src="http://ferrisgame.ru:8080/assets/images/radar.png" alt="Фон радара" :style="compStyle"
+             class="radar-sprite"/>
         <div v-for="p in map.pathPoints" :key="p.x *100000 + p.y" class="path-point"
-             :style="addShiftToStyle(p, ppSize, gridSize/smallifier)"/>
+             :style="addShiftToStyle(p, ppSize, gridSize/smallifier) + (p.active ? 'background: radial-gradient(lightgreen 0%, #lightgreen 30%, #FFFFFF00 60%);' : '')">
+            <img src="http://ferrisgame.ru:8080/assets/images/point.png" alt="точка" style="width:100%; height:100%"/>
+        </div>
         <Point v-for='p in points'
                :key='p.id'
                :current="p.current"
@@ -10,11 +13,13 @@
                :position="p.position"
                :size="gridSize">
         </Point>
-        <img src='http://localhost:8080/player.png'
+        <img src='http://ferrisgame.ru:8080/assets/images/arrow.png'
              alt="игрок"
              :style="addShiftToStyle({x:map.logic.current.x, y:map.logic.current.y},getSizeStyle(2*gridSize),2*gridSize)"
              class="player-icon"/>
-        <img src="http://localhost:8080/radar-border.png" alt="Рамка радара" :style="compStyle" class="radar-sprite"/>
+        <div class="radar-shadow"/>
+        <img src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
+             class="radar-sprite high" />
 
     </div>
 </template>
@@ -26,6 +31,7 @@
         name: "Radar",
         components: {Point},
         props: {
+            inGame: Boolean,
             angle_speed: Number,
             range: Number,
             map: {
@@ -98,7 +104,6 @@
 
     .path-point {
         position: absolute;
-        background-color: aquamarine;
 
     }
 
@@ -110,5 +115,20 @@
         position: absolute;
         top: 0;
         left: 0;
+        z-index: -300;
+    }
+
+    .radar-shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -110;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(#00000000 0%, #00000000 40%, #2c3e50 60%);
+    }
+
+    .high{
+        z-index: 300;
     }
 </style>

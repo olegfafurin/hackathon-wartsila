@@ -1,5 +1,12 @@
 #!/bin/bash
 
+cp -r src/assets/*.png ../../server/assets/images/
+cp -r src/assets/images/*.png ../../server/assets/images/
+
 npm run build
 rm -rf ../../server/dist
 cp -r dist ../../server
+
+cd ../../server
+./gradlew build
+./gradlew run

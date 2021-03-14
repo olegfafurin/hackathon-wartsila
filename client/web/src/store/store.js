@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 import {userStore} from '@/store/modules/user'
 import {gameStore} from '@/store/modules/game'
@@ -10,5 +11,8 @@ export const store = new Vuex.Store({
     modules: {
         user: userStore,
         game: gameStore
-    }
+    },
+    plugins: [
+        createPersistedState({paths: ['user', 'game']})
+    ]
 })

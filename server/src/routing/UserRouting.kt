@@ -39,7 +39,8 @@ class UserRouting(endpoint: String) : Routing(endpoint) {
             authenticate {
                 post("/logout") {
                     val user = call.principal<User>()
-                    TODO("need to remove user from all sessions")
+                    call.respond(HttpStatusCode.OK)
+//                    TODO("need to remove user from all sessions")
                 }
             }
 

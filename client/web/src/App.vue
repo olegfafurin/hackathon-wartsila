@@ -1,17 +1,18 @@
 <template>
   <div id="app">
     <Game msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
+
   </div>
 </template>
 
 <script>
 import Game from "@/components/pages/game/Game";
-import Auth from '@/components/pages/auth/Auth';
 
 export default {
   name: 'App',
   components: {
-    Game, Auth
+    Game
   }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
     <div :class="className" :style="stylePosition">
+        <img src="http://ferrisgame.ru:8080/assets/images/point.png" alt="точка" style="width:100%; height:100%"/>
     </div>
 </template>
 
@@ -26,7 +27,7 @@
                 const res = "left:" + (this.position.x - this.size/2) + "px; top:" + (this.position.y - this.size / 2) + "px; " +
                     "width: " + this.size + "px; " +
                     "height: " + this.size + "px; " +
-                    (!this.current ? ("border-radius: " + this.size + "px; ") : "");
+                    "border-radius: " + this.size + "px; ";
                 console.log(res);
                 return res;
             }
@@ -41,16 +42,13 @@
     .point {
         position: absolute;
         background-color: #42b983;
-
+z-index: -200;
     }
 
     .point-active {
         background-color: aqua;
     }
 
-    .point-current {
-        background: none;
-    }
 
 
 
