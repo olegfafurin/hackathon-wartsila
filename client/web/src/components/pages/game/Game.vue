@@ -78,12 +78,28 @@
                         for(let p in r.data.field.edges[e].path){
                             v.push({
                                 x: r.data.field.edges[e].path[p].first,
+<<<<<<< HEAD
+                                y: r.data.field.edges[e].path[p].second
+=======
                                 y: -r.data.field.edges[e].path[p].second
+>>>>>>> 4caf03810397fe53111ea26e8119be7fa2bb7233
                             })
                         }
                     }
                     this.radarData.map = {
                         pathPoints: v,
+<<<<<<< HEAD
+                        vertexes: r.data.field.vertices,
+                        logic: {
+                            current: {
+                                id: 0,
+                                x: 2,
+                                y: 6,
+                            },
+                            dir: "N"
+                        },
+                    }
+=======
                         vertexes: r.data.field.vertices.map((p) => {
                             return {
                                 ...p,
@@ -98,6 +114,7 @@
                             dir: r.data.currentDirection[0]
                         },
                     };
+>>>>>>> 4caf03810397fe53111ea26e8119be7fa2bb7233
                     return r.data;
                 }).catch(e => {
                     console.log(e)

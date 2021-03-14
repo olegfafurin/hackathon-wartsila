@@ -104,4 +104,9 @@ class Game(
         return false
     }
 
+    fun isDead(player: Player) = player.health <= 0
+
+    fun removePlayer(player: Player) {
+        players.removeAt(players.indexOfFirst { it.username == player.username })
+    }
 }
