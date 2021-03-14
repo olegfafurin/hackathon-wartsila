@@ -2,8 +2,10 @@
     <div class="radar-container" :style="compStyle">
         <img src="http://ferrisgame.ru:8080/assets/images/radar.png" alt="Фон радара" :style="compStyle"
              class="radar-sprite"/>
+        <img v-if="!inGame" src="http://ferrisgame.ru:8080/assets/images/radar-border.png" alt="Рамка радара" :style="compStyle"
+             class="radar-sprite"/>
         <div class="connect-container">
-            <Connect v-if="!inGame"/>
+            <Connect v-if="!inGame" :on-connect="onConnect"/>
         </div>
         <div v-for="p in (inGame ? map.pathPoints : [])" :key="p.x *100000 + p.y" class="path-point"
              :style="addShiftToStyle(p, ppSize, gridSize/smallifier) + (p.active ? 'background: radial-gradient(lightgreen 0%, #lightgreen 30%, #FFFFFF00 60%);' : '')">
@@ -35,6 +37,7 @@
         name: "Radar",
         components: {Connect, Point},
         props: {
+            onConnect: Function,
             inGame: Boolean,
             angle_speed: Number,
             range: Number,

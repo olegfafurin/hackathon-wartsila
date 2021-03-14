@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Radar :size="radarSize" :map="radarData.map" :in-game="inGame"></Radar>
+        <Radar :size="radarSize" :map="radarData.map" :in-game="inGame" :on-connect="getField"></Radar>
         <ControlPanel :size="controlSize" :playerData="playerData"/>
     </div>
 </template>

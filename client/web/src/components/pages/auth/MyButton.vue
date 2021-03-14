@@ -34,11 +34,11 @@
     }
 
     .btn-text {
-        color: white;
         z-index: 100;
         position: absolute;
         top: 16px;
         width: 100%;
-
+        font-family: Maler, sans-serif;
+        color: #211813;
     }
 </style>
