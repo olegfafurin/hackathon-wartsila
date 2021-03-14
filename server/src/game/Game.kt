@@ -14,6 +14,12 @@ class Game(
         field.vertices[0].items.add(Missile(1))
         field.vertices[field.vertices.size / 2].items.add(MineItem(2))
         field.vertices[field.vertices.size - 1].items.add(Missile(1))
+
+        field.edges.forEach {
+            if (it.blocked) {
+                it.path = mutableListOf()
+            }
+        }
     }
 
     private var currentPlayer = 0
@@ -97,6 +103,9 @@ class Game(
 
     fun makeMove(player: Player, direction: Direction): Boolean {
         val outgoingEdge = field.edges[field.vertices[player.vertexNo].edges[direction] ?: return false]
+        if (outgoingEdge.blocked) {
+            return false
+        }
         val newVertexNo = outgoingEdge.vertex1 + outgoingEdge.vertex2 - player.vertexNo
         player.vertexNo = newVertexNo
         val incomingDirection =
